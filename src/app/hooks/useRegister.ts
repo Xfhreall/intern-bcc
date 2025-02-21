@@ -26,7 +26,6 @@ export function useRegister() {
 
   const onSubmit = (values: LoginFormValues) => {
     console.log(values);
-    // Handle login logic here
   };
 
   return {

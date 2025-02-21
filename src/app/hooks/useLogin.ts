@@ -26,7 +26,6 @@ export function useLogin() {
 
   const onSubmit = (values: LoginFormValues) => {
     console.log(values);
-    // Handle login logic here
   };
 
   return {
