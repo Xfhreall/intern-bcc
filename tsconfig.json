@@ -23,7 +23,7 @@
       "@/*": ["./*"],
       "@/src/*": ["./src/*"],
       "@/components/*": ["./src/components/*"],
-      "@/hooks/*": ["./src/app/hooks/*"]
+      "@/hooks/*": ["./src/hooks/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

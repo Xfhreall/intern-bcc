@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
-import { useRegister } from "@/hooks/useRegister";
+import { useRegister } from "@/src/hooks/useRegister";
 
 export default function Register() {
   const { form, onSubmit } = useRegister();

@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
-import { useLogin } from "@/hooks/useLogin";
+import { useLogin } from "@/src/hooks/useLogin";
 
 export default function Login() {
   const { form, onSubmit } = useLogin();
