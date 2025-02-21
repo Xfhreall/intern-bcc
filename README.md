@@ -8,6 +8,9 @@ This is a template for creating applications using Next.js 15 (app directory) an
 
 - [Next.js 15](https://nextjs.org/docs/getting-started)
 - [HeroUI v2](https://heroui.com/)
+- [TanStack Query](https://tanstack.com/query/latest/docs/framework/react/overview)
+- [Axios](https://axios-http.com/docs/intro)
+- [NextAuth.js](https://next-auth.js.org/)
 - [Tailwind CSS](https://tailwindcss.com/)
 - [Tailwind Variants](https://tailwind-variants.org)
 - [TypeScript](https://www.typescriptlang.org/)
