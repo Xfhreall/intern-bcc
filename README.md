@@ -17,6 +17,7 @@ This is a template for creating applications using Next.js 15 (app directory) an
 - [Framer Motion](https://www.framer.com/motion/)
 - [shadcn/ui](https://ui.shadcn.com/)
 - [next-themes](https://github.com/pacocoursey/next-themes)
+- [zod](https://zod.dev)
 
 ## How to Use
 
