@@ -31,6 +31,7 @@ export default function RootLayout({
           quality={100}
           src={bg}
         />
+        <span className="absolute inset-0 bg-gradient-to-b from-transparent to-black/50" />
       </div>
       <main className="relative z-10">{children}</main>
       <footer className="absolute z-10 flex justify-between w-full text-lg font-bold uppercase px-14 bottom-6">
