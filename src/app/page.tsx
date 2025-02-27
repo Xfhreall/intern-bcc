@@ -1,5 +1,7 @@
 import About from "./(landing)/about";
+import { Banner } from "./(landing)/banner";
 import Hero from "./(landing)/hero";
+import { News } from "./(landing)/news";
 import { Services } from "./(landing)/service";
 import { Testimoni } from "./(landing)/testimoni";
 
@@ -12,6 +14,8 @@ export default function Home() {
       <About />
       <Services />
       <Testimoni />
+      <Banner />
+      <News />
     </>
   );
 }

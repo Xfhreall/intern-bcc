@@ -21,15 +21,17 @@ export const Navbar = () => {
         </NavbarBrand>
       </NavbarContent>
       <NavbarContent justify="center">
-        <ul className="justify-start hidden gap-8 ml-2 font-medium md:flex">
-          {siteConfig.navItems.map((item) => (
-            <NavbarItem key={item.href}>
-              <NextLink color="foreground" href={item.href}>
-                {item.label}
-              </NextLink>
-            </NavbarItem>
-          ))}
-        </ul>
+        <div className="py-2 text-white bg-black rounded-lg px-11">
+          <ul className="justify-start hidden gap-12 font-normal md:flex">
+            {siteConfig.navItems.map((item) => (
+              <NavbarItem key={item.href}>
+                <NextLink color="foreground" href={item.href}>
+                  {item.label}
+                </NextLink>
+              </NavbarItem>
+            ))}
+          </ul>
+        </div>
       </NavbarContent>
       <NavbarContent justify="end">
         <NavbarItem className="hidden md:flex">

@@ -1,7 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useState } from "react";
+import { motion, useAnimationControls } from "framer-motion";
+import { useEffect, useState } from "react";
 
 import { TestimonialCard } from "@/components/ui/testi-card";
 
@@ -38,11 +38,48 @@ const testimonials = [
   },
 ];
 
+const duplicatedTestimonials = [...testimonials, ...testimonials];
+
 export const Testimoni = () => {
   const [isHovered, setIsHovered] = useState(false);
+  const controls = useAnimationControls();
+
+  const cardWidth = 350 + 32;
+  const totalWidth = testimonials.length * cardWidth;
+
+  useEffect(() => {
+    controls.start({
+      x: -totalWidth,
+      transition: {
+        duration: 30,
+        ease: "linear",
+        repeat: Number.POSITIVE_INFINITY,
+        repeatType: "loop",
+      },
+    });
+  }, [controls, totalWidth]);
+
+  useEffect(() => {
+    if (isHovered) {
+      controls.stop();
+    } else {
+      controls.start({
+        x: -totalWidth,
+        transition: {
+          duration: 30,
+          ease: "linear",
+          repeat: Number.POSITIVE_INFINITY,
+          repeatType: "loop",
+        },
+      });
+    }
+  }, [isHovered, controls, totalWidth]);
 
   return (
-    <section className="px-4 py-16 overflow-hidden md:px-6 lg:px-8">
+    <section
+      className="px-4 py-16 overflow-hidden md:px-6 lg:px-8"
+      id="testimoni"
+    >
       <div className="mx-auto mb-12 max-w-7xl">
         <h2 className="mb-2 text-lg font-semibold text-gray-600">
           Testimonial
@@ -59,32 +96,26 @@ export const Testimoni = () => {
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        <motion.div
-          animate={{
-            x: isHovered ? 0 : "-50%",
-          }}
-          className="flex"
-          style={{
-            width: "fit-content",
-          }}
-          transition={{
-            duration: 20,
-            repeat: Number.POSITIVE_INFINITY,
-            ease: "linear",
-            repeatType: "loop",
-          }}
-        >
-          {testimonials.map((testimonial, index) => (
-            <TestimonialCard
-              key={index}
-              author={testimonial.author}
-              colorScheme={testimonial.colorScheme}
-              rating={4}
-              role={testimonial.role}
-              text={testimonial.text}
-            />
-          ))}
-        </motion.div>
+        <div className="overflow-hidden">
+          <motion.div
+            animate={controls}
+            className="flex"
+            style={{
+              width: "fit-content",
+            }}
+          >
+            {duplicatedTestimonials.map((testimonial, index) => (
+              <TestimonialCard
+                key={index}
+                author={testimonial.author}
+                colorScheme={testimonial.colorScheme}
+                rating={4}
+                role={testimonial.role}
+                text={testimonial.text}
+              />
+            ))}
+          </motion.div>
+        </div>
       </div>
     </section>
   );

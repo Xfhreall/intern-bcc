@@ -20,8 +20,8 @@ export function FeatureCard({
         <Icon classname="w-10 h-10" />
       </CardHeader>
       <CardContent className="flex-grow space-y-4">
-        <h4 className="font-bold">{title}</h4>
-        <p className="text-muted-foreground">{description}</p>
+        <h4 className="text-lg font-bold">{title}</h4>
+        <p className="font-light text-md">{description}</p>
       </CardContent>
     </Card>
   );

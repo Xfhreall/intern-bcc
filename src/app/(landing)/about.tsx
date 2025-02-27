@@ -7,7 +7,6 @@ import {
   ReportIcon,
 } from "@/public/icon/aboutIcon";
 import { FeatureCard } from "@/components/ui/feature-card";
-import { Button } from "@/components/ui/button";
 
 const About = () => {
   const features = [
@@ -40,7 +39,10 @@ const About = () => {
   ];
 
   return (
-    <section className="flex min-h-screen px-4 py-16 md:px-6 lg:px-8">
+    <section
+      className="flex min-h-screen px-4 py-16 md:px-6 lg:px-8"
+      id="about"
+    >
       <div className="flex flex-col gap-8 mx-auto lg:flex-row max-w-7xl">
         <div className="grid w-full gap-6 lg:w-1/2 sm:grid-cols-2">
           {features.map((feature, index) => (
@@ -53,19 +55,13 @@ const About = () => {
             <h2 className="text-2xl font-bold">About</h2>
             <h3 className="text-3xl font-bold">What is AQUAVERSE?</h3>
           </span>
-          <p className="text-muted-foreground">
+          <p className="font-light">
             AQUAVERSE is a digital platform that connects people, communities
             and stakeholders in efforts to report pollution, conservation
             donations and marine environmental education. With transparent and
             accessible features, we encourage real action to keep marine
             ecosystems clean and sustainable.
           </p>
-          <Button
-            className="text-white bg-primary hover:bg-secondary max-w-56"
-            size="lg"
-          >
-            Start Now!
-          </Button>
         </div>
       </div>
     </section>
