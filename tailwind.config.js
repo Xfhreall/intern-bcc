@@ -4,6 +4,7 @@ import { heroui } from "@heroui/theme";
 module.exports = {
   content: [
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./lib/*.{js,ts,jsx,tsx,mdx}",
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
     "./node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
@@ -11,7 +12,6 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ["var(--font-sans)"],
-        mono: ["var(--font-mono)"],
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -19,7 +19,7 @@ module.exports = {
         sm: "calc(var(--radius) - 4px)",
       },
       colors: {
-        background: "hsl(var(--background))",
+        background: "#F4F4F4",
         foreground: "hsl(var(--foreground))",
         card: {
           DEFAULT: "hsl(var(--card))",
@@ -30,11 +30,11 @@ module.exports = {
           foreground: "hsl(var(--popover-foreground))",
         },
         primary: {
-          DEFAULT: "hsl(var(--primary))",
+          DEFAULT: "#0077B6",
           foreground: "hsl(var(--primary-foreground))",
         },
         secondary: {
-          DEFAULT: "hsl(var(--secondary))",
+          DEFAULT: "#90E0EF",
           foreground: "hsl(var(--secondary-foreground))",
         },
         muted: {

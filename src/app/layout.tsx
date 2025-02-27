@@ -1,9 +1,18 @@
 import "@/styles/globals.css";
 import clsx from "clsx";
+import { Metadata } from "next";
 
 import { Providers } from "./providers";
 
+import { siteConfig } from "@/config/site";
 import { fontSans } from "@/config/fonts";
+
+export const metadata = (): Metadata => {
+  return {
+    title: siteConfig.name,
+    description: siteConfig.description,
+  };
+};
 
 export default function RootLayout({
   children,
@@ -19,9 +28,7 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
-        <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
-          {children}
-        </Providers>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
