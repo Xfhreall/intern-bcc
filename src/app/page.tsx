@@ -1,7 +1,21 @@
+import About from "./(landing)/about";
+import { Banner } from "./(landing)/banner";
+import Hero from "./(landing)/hero";
+import { News } from "./(landing)/news";
+import { Services } from "./(landing)/service";
+import { Testimoni } from "./(landing)/testimoni";
+
+import { Navbar } from "@/components/navbar";
 export default function Home() {
   return (
-    <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
-      <h1>init</h1>
-    </section>
+    <>
+      <Navbar />
+      <Hero />
+      <About />
+      <Services />
+      <Testimoni />
+      <Banner />
+      <News />
+    </>
   );
 }
