@@ -18,7 +18,7 @@ export default function NotFound() {
             asChild
             className="w-full h-12 bg-[#0077b6] hover:bg-[#0077b6]/90 text-white"
           >
-            <Link href="/">Return to Home</Link>
+            <Link href="/">Back to Home</Link>
           </Button>
         </div>
       </div>
