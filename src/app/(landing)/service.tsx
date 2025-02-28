@@ -30,7 +30,7 @@ export const Services = () => {
               <div className="mb-4 text-4xl font-bold text-primary md:text-5xl">
                 {stat.value}
               </div>
-              <p className="text-sm text-gray-600 md:text-base">
+              <p className="mx-auto text-sm text-gray-600 max-w-72 md:text-base">
                 {stat.description}
               </p>
             </div>
