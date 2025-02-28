@@ -1,5 +1,4 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-
 import { IconProps } from "@/public/icon/aboutIcon";
 
 interface FeatureCardProps {
@@ -15,7 +14,7 @@ export function FeatureCard({
   description,
 }: FeatureCardProps) {
   return (
-    <Card className="flex flex-col h-full shadow-lg">
+    <Card className="flex flex-col shadow-lg h-[302px]">
       <CardHeader>
         <Icon classname="w-10 h-10" />
       </CardHeader>

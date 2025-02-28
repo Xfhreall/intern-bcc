@@ -16,12 +16,12 @@ export const Navbar = () => {
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
         <NavbarBrand as="li" className="gap-3 max-w-fit">
           <NextLink className="flex items-center justify-start " href="/">
-            <p className="text-2xl font-bold text-inherit">Community</p>
+            <p className="text-2xl font-bold text-inherit">Nautikara</p>
           </NextLink>
         </NavbarBrand>
       </NavbarContent>
       <NavbarContent justify="center">
-        <div className="py-2 text-white bg-black rounded-lg px-11">
+        <div className="py-2 text-black rounded-lg px-11">
           <ul className="justify-start hidden gap-12 font-normal md:flex">
             {siteConfig.navItems.map((item) => (
               <NavbarItem key={item.href}>

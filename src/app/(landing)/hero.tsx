@@ -6,8 +6,8 @@ import { Button } from "@/components/ui/button";
 
 const Hero = () => {
   return (
-    <section className="flex items-center justify-center w-full min-h-[600px]">
-      <div className="relative w-full max-w-6xl rounded-[10px] overflow-hidden">
+    <section className="flex items-center justify-center w-full min-h-[600px] px-8">
+      <div className="relative w-full max-w-7xl rounded-[10px] overflow-hidden">
         <div className="relative w-full h-[600px]">
           <Image
             fill
