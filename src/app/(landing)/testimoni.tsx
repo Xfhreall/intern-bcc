@@ -4,9 +4,9 @@ import { motion, useAnimationControls } from "framer-motion";
 import { useEffect, useState } from "react";
 
 import { TestimonialCard } from "@/components/ui/testi-card";
-import one from "@/public/assets/avatar/image1.png";
-import two from "@/public/assets/avatar/image2.png";
-import three from "@/public/assets/avatar/image3.png";
+import one from "@/public/assets/avatar/image1.svg";
+import two from "@/public/assets/avatar/image2.svg";
+import three from "@/public/assets/avatar/image3.svg";
 
 const testimonials = [
   {
