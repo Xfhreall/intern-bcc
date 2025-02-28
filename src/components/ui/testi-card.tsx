@@ -1,6 +1,4 @@
-import { StaticImageData } from "next/image";
-
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import Image, { StaticImageData } from "next/image";
 
 interface TestimonialCardProps {
   text: string;
@@ -29,9 +27,13 @@ export function TestimonialCard({
       <p className="text-gray-600 mb-6 min-h-[80px]">{text}</p>
 
       <div className="flex items-center gap-3">
-        <Avatar>
-          <AvatarImage src={avatarUrl?.src} />
-        </Avatar>
+        <Image
+          alt={author}
+          className="object-cover w-10 h-10 rounded-full"
+          height={40}
+          src={avatarUrl?.src || ""}
+          width={40}
+        />
         <div>
           <p className="font-semibold">{author}</p>
           <p className="text-sm text-gray-500">{role}</p>
