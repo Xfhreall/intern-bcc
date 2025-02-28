@@ -6,7 +6,7 @@ interface TestimonialCardProps {
   role: string;
   rating: number;
   avatarUrl?: string;
-  colorScheme: "blue" | "green";
+  colorScheme: string;
 }
 
 export function TestimonialCard({
@@ -18,12 +18,9 @@ export function TestimonialCard({
 }: TestimonialCardProps) {
   return (
     <div className="w-[350px] p-6 bg-white rounded-xl border shadow-lg mx-4">
-      <div className="flex gap-1 mb-6">
+      <div className="flex gap-2 mb-6">
         {Array.from({ length: 4 }).map((_, i) => (
-          <div
-            key={i}
-            className={`w-5 h-5 rounded-lg ${colorScheme === "blue" ? "bg-blue-500" : "bg-green-500"}`}
-          />
+          <div key={i} className={`w-5 h-5 rounded-md ${colorScheme}`} />
         ))}
       </div>
 

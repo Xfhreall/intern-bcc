@@ -1,35 +1,37 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
 import { useForm } from "react-hook-form";
+import * as z from "zod";
+import { redirect } from "next/navigation";
 
-const formSchema = z.object({
-  email: z.string().email({
-    message: "Masukkan alamat email yang valid.",
-  }),
-  password: z.string().min(8, {
-    message: "Password harus minimal 8 karakter.",
-  }),
-  terms: z.boolean().default(false),
-});
+const schema = z
+  .object({
+    email: z.string().email({ message: "Please enter a valid email address" }),
+    password: z
+      .string()
+      .min(8, { message: "Password must be at least 8 characters" }),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ["confirmPassword"],
+  });
 
-export type LoginFormValues = z.infer<typeof formSchema>;
+type FormValues = z.infer<typeof schema>;
 
-export function useRegister() {
-  const form = useForm<LoginFormValues>({
-    resolver: zodResolver(formSchema),
+export const useRegister = () => {
+  const form = useForm<FormValues>({
+    resolver: zodResolver(schema),
     defaultValues: {
       email: "",
       password: "",
-      terms: false,
+      confirmPassword: "",
     },
   });
 
-  const onSubmit = (values: LoginFormValues) => {
-    console.log(values);
+  const onSubmit = (values: FormValues) => {
+    alert(JSON.stringify(values));
+    redirect("/register/otp");
   };
 
-  return {
-    form,
-    onSubmit,
-  };
-}
+  return { form, onSubmit };
+};
