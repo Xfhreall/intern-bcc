@@ -12,7 +12,7 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 
-export default function OTPVerification() {
+const OTPVerification = () => {
   const [otp, setOtp] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -109,4 +109,6 @@ export default function OTPVerification() {
       </div>
     </div>
   );
-}
+};
+
+export default OTPVerification;

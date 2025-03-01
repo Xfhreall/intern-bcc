@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Send } from "lucide-react";
+import { Send } from "lucide-react";
 
 export const Banner = () => {
   return (
@@ -22,12 +22,6 @@ export const Banner = () => {
             >
               Register Now
             </Link>
-            <Link
-              className="flex items-center justify-center p-3 transition-colors border-2 border-white rounded-lg hover:bg-white hover:bg-opacity-10"
-              href="#learn-more"
-            >
-              <ArrowRight className="w-5 h-5" />
-            </Link>
           </div>
         </div>
       </div>
@@ -41,7 +35,7 @@ export const Banner = () => {
               className="font-medium text-primary hover:underline"
               href="https://instagram.com/aquaverse.id"
             >
-              @aquaverse.id
+              @nautikara.id
             </Link>{" "}
             for more information!
           </p>

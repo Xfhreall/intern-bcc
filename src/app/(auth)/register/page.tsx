@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/input";
 import { useRegister } from "@/src/hooks/useRegister";
 import { GoogleIcon } from "@/public/icon/googleIcon";
 
-export default function Register() {
+const Register = () => {
   const { form, onSubmit } = useRegister();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -188,4 +188,6 @@ export default function Register() {
       </div>
     </div>
   );
-}
+};
+
+export default Register;

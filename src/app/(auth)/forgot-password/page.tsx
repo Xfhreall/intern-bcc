@@ -1,6 +1,10 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -10,15 +14,12 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
 
 const formSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
 });
 
-export default function ForgotPassword() {
+const ForgotPassword = () => {
   const [isEmailSent, setIsEmailSent] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -37,7 +38,7 @@ export default function ForgotPassword() {
       <div className="flex items-center justify-center min-h-screen">
         <div className="w-full max-w-md p-8 mx-auto space-y-6 bg-white rounded-lg shadow-xl">
           <div className="flex flex-col items-center justify-center space-y-4">
-            <div className="w-16 h-16 rounded-lg bg-primary"></div>
+            <div className="w-16 h-16 rounded-lg bg-primary" />
             <div className="text-center">
               <h1 className="text-2xl font-semibold text-gray-800">
                 Your Link Has Been Sent!
@@ -47,10 +48,10 @@ export default function ForgotPassword() {
           </div>
 
           <Input
+            disabled
+            className="h-12"
             type="email"
             value={form.getValues("email")}
-            className="h-12"
-            disabled
           />
 
           <Button
@@ -61,7 +62,7 @@ export default function ForgotPassword() {
           </Button>
 
           <div className="text-center">
-            <Link href="/login" className="text-primary hover:underline">
+            <Link className="text-primary hover:underline" href="/login">
               Go Back
             </Link>
           </div>
@@ -74,7 +75,7 @@ export default function ForgotPassword() {
     <div className="flex items-center justify-center min-h-screen">
       <div className="w-full max-w-md p-8 mx-auto space-y-6 bg-white rounded-lg shadow-xl">
         <div className="flex flex-col items-center justify-center space-y-4">
-          <div className="w-16 h-16 rounded-lg bg-primary"></div>
+          <div className="w-16 h-16 rounded-lg bg-primary" />
           <div className="text-center">
             <h1 className="text-2xl font-semibold text-gray-800">
               Forgot Your Password?
@@ -84,7 +85,7 @@ export default function ForgotPassword() {
         </div>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
             <FormField
               control={form.control}
               name="email"
@@ -92,8 +93,8 @@ export default function ForgotPassword() {
                 <FormItem>
                   <FormControl>
                     <Input
-                      placeholder="Example@gmail.com"
                       className="h-12"
+                      placeholder="Example@gmail.com"
                       {...field}
                     />
                   </FormControl>
@@ -103,8 +104,8 @@ export default function ForgotPassword() {
             />
 
             <Button
-              type="submit"
               className="w-full h-12 bg-primary hover:bg-primary/90"
+              type="submit"
             >
               Send Verification Link
             </Button>
@@ -112,11 +113,13 @@ export default function ForgotPassword() {
         </Form>
 
         <div className="text-center">
-          <Link href="/login" className="text-primary hover:underline">
+          <Link className="text-primary hover:underline" href="/login">
             Go Back
           </Link>
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default ForgotPassword;

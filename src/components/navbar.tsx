@@ -15,6 +15,7 @@ export const Navbar = () => {
     <HeroUINavbar className="py-4" maxWidth="xl" position="sticky">
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
         <NavbarBrand as="li" className="gap-3 max-w-fit">
+          <div className="w-6 h-6 bg-gray-400 rounded-lg" />
           <NextLink className="flex items-center justify-start " href="/">
             <p className="text-2xl font-bold text-inherit">Nautikara</p>
           </NextLink>

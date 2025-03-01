@@ -17,7 +17,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { useLogin } from "@/hooks/useLogin";
 import { GoogleIcon } from "@/public/icon/googleIcon";
 
-export default function Login() {
+const Login = () => {
   const { form, onSubmit } = useLogin();
   const [showPassword, setShowPassword] = useState(false);
 
@@ -159,4 +159,6 @@ export default function Login() {
       </div>
     </div>
   );
-}
+};
+
+export default Login;

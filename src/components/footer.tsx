@@ -1,7 +1,13 @@
 import Link from "next/link";
-import { Twitter, Instagram, Mail, Youtube } from "lucide-react";
 
-export default function Footer() {
+import {
+  TwitterIcon,
+  InstagramIcon,
+  EmailIcon,
+  YoutubeIcon,
+} from "@/public/icon/socialMedia";
+
+export const Footer = () => {
   return (
     <footer className="py-10 text-white bg-primary">
       <div className="container px-12 mx-auto max-w-7xl">
@@ -12,16 +18,16 @@ export default function Footer() {
 
             <div className="flex space-x-4">
               <Link aria-label="Twitter" href="#">
-                <Twitter className="w-6 h-6 text-white transition-colors hover:text-gray-300" />
+                <TwitterIcon className="w-6 h-6 text-white transition-colors hover:text-gray-300" />
               </Link>
               <Link aria-label="Instagram" href="#">
-                <Instagram className="w-6 h-6 text-white transition-colors hover:text-gray-300" />
+                <InstagramIcon className="w-6 h-6 text-white transition-colors hover:text-gray-300" />
               </Link>
               <Link aria-label="Email" href="#">
-                <Mail className="w-6 h-6 text-white transition-colors hover:text-gray-300" />
+                <EmailIcon className="w-6 h-6 text-white transition-colors hover:text-gray-300" />
               </Link>
               <Link aria-label="YouTube" href="#">
-                <Youtube className="w-6 h-6 text-white transition-colors hover:text-gray-300" />
+                <YoutubeIcon className="w-6 h-6 text-white transition-colors hover:text-gray-300" />
               </Link>
             </div>
           </div>
@@ -104,9 +110,9 @@ export default function Footer() {
           </div>
         </div>
         <div className="pt-6 mt-10 border-t border-blue-400">
-          <p className="font-medium">© 2025 AQUAVERSE. All rights reserved.</p>
+          <p className="font-medium">© 2025 NAUTIKARA. All rights reserved.</p>
         </div>
       </div>
     </footer>
   );
-}
+};
