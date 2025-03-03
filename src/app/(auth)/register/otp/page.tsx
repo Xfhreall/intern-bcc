@@ -1,7 +1,6 @@
 "use client";
 import type React from "react";
 
-import { useState } from "react";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
@@ -11,16 +10,10 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
+import { useOtp } from "@/hooks/useOtp";
 
 const OTPVerification = () => {
-  const [otp, setOtp] = useState("");
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (otp.length === 6) {
-      alert(`Verifying OTP: ${otp}`);
-    }
-  };
+  const { otp, handleSubmit, setOtp } = useOtp();
 
   return (
     <div className="w-full max-w-md p-8 mx-auto space-y-6 bg-white rounded-lg shadow-xl">
@@ -67,7 +60,7 @@ const OTPVerification = () => {
         </div>
 
         <Button
-          className="w-full h-12 bg-[#0077b6] hover:bg-[#0077b6]/90"
+          className="w-full h-12 bg-primary hover:bg-primary/90"
           disabled={otp.length !== 6}
           type="submit"
         >
@@ -77,11 +70,11 @@ const OTPVerification = () => {
 
       <p className="text-sm text-center text-gray-600">
         By registering, you agree to the{" "}
-        <Link className="text-[#0077b6] hover:underline" href="/privacy">
+        <Link className="text-primary hover:underline" href="/privacy">
           Privacy Policy
         </Link>{" "}
         &{" "}
-        <Link className="text-[#0077b6] hover:underline" href="/terms">
+        <Link className="text-primary hover:underline" href="/terms">
           Terms of Service
         </Link>
       </p>
@@ -103,7 +96,7 @@ const OTPVerification = () => {
 
       <div className="text-sm text-center text-gray-600">
         Already have an account?{" "}
-        <Link className="text-[#0077b6] hover:underline" href="/login">
+        <Link className="text-primary hover:underline" href="/login">
           Login
         </Link>
       </div>

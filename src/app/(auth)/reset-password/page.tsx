@@ -1,9 +1,6 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
 import { Eye, EyeOff } from "lucide-react";
 
 import { Input } from "@/components/ui/input";
@@ -15,32 +12,12 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
-
-const formSchema = z
-  .object({
-    password: z.string().min(8, "Password must be at least 8 characters"),
-    confirmPassword: z.string(),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords don't match",
-    path: ["confirmPassword"],
-  });
+import { useResetPassword } from "@/hooks/useResetPassword";
 
 const ResetPassword = () => {
+  const { form, onSubmit } = useResetPassword();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      password: "",
-      confirmPassword: "",
-    },
-  });
-
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
-  };
 
   return (
     <div className="flex items-center justify-center min-h-screen ">

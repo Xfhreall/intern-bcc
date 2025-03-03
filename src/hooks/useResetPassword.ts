@@ -1,14 +1,10 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { redirect } from "next/navigation";
 
 const formSchema = z
   .object({
-    email: z.string().email({ message: "Please enter a valid email address" }),
-    password: z
-      .string()
-      .min(8, { message: "Password must be at least 8 characters" }),
+    password: z.string().min(8, "Password must be at least 8 characters"),
     confirmPassword: z.string(),
   })
   .refine((data) => data.password === data.confirmPassword, {
@@ -16,21 +12,17 @@ const formSchema = z
     path: ["confirmPassword"],
   });
 
-type FormValues = z.infer<typeof formSchema>;
-
-export const useRegister = () => {
-  const form = useForm<FormValues>({
+export const useResetPassword = () => {
+  const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
       password: "",
       confirmPassword: "",
     },
   });
 
-  const onSubmit = (values: FormValues) => {
-    alert(JSON.stringify(values));
-    redirect("/register/otp");
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
+    console.log(values);
   };
 
   return { form, onSubmit };

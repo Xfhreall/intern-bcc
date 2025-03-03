@@ -1,19 +1,6 @@
-export const Services = () => {
-  const stats = [
-    {
-      value: "500+",
-      description: "Marine pollution reports have been followed up",
-    },
-    {
-      value: "50+",
-      description: "active community in marine conservation",
-    },
-    {
-      value: "IDR 1M+",
-      description: "donations have been channeled to environmental projects",
-    },
-  ];
+import { stats } from "@/lib/serviceDatas";
 
+export const Services = () => {
   return (
     <section className="px-4 py-16 md:px-6 lg:px-8" id="services">
       <div className="mx-auto max-w-7xl">

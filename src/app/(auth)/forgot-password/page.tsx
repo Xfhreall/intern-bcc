@@ -1,9 +1,6 @@
 "use client";
-import { useState } from "react";
+
 import Link from "next/link";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -14,24 +11,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-
-const formSchema = z.object({
-  email: z.string().email("Please enter a valid email address"),
-});
+import { useForgot } from "@/hooks/useForgot";
 
 const ForgotPassword = () => {
-  const [isEmailSent, setIsEmailSent] = useState(false);
-
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      email: "",
-    },
-  });
-
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    setIsEmailSent(true);
-  };
+  const { form, onSubmit, isEmailSent } = useForgot();
 
   if (isEmailSent) {
     return (
