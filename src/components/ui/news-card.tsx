@@ -1,6 +1,8 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
-import Image from "next/image";
+import { Image } from "@heroui/react";
 
 import { NewsProps } from "@/lib/newDatas";
 
@@ -15,11 +17,10 @@ const NewsCard = ({ data }: { data: NewsProps[] }) => {
           <div className="grid h-full p-6 space-y-3">
             <div className="relative h-48 md:h-56 lg:h-64">
               <Image
-                fill
                 alt={item.title}
                 className="object-cover rounded-[10px]"
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                src={item.image}
+                src={item.image.src}
               />
             </div>
             <h4 className="overflow-hidden text-xl font-bold text-ellipsis display-webkit-box -webkit-line-clamp-2 -webkit-box-orient-vertical">
