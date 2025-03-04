@@ -19,7 +19,7 @@ export function FeatureCard({
         <Icon classname="w-10 h-10" />
       </CardHeader>
       <CardContent className="flex-grow space-y-4">
-        <h4 className="text-lg font-bold">{title}</h4>
+        <h4 className="text-lg font-bold line-clamp-2">{title}</h4>
         <p className="font-light text-md">{description}</p>
       </CardContent>
     </Card>

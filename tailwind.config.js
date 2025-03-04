@@ -19,7 +19,7 @@ module.exports = {
         sm: "calc(var(--radius) - 4px)",
       },
       colors: {
-        background: "#F4F4F4",
+        background: "#F5F5F5",
         foreground: "hsl(var(--foreground))",
         card: {
           DEFAULT: "hsl(var(--card))",
@@ -34,7 +34,7 @@ module.exports = {
           foreground: "hsl(var(--primary-foreground))",
         },
         secondary: {
-          DEFAULT: "#41C9E2",
+          DEFAULT: "##F5FCFF",
           foreground: "hsl(var(--secondary-foreground))",
         },
         muted: {

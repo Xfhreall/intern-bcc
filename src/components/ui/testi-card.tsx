@@ -6,7 +6,6 @@ interface TestimonialCardProps {
   role: string;
   rating: number;
   avatarUrl?: StaticImageData;
-  colorScheme: string;
 }
 
 export function TestimonialCard({
@@ -14,16 +13,9 @@ export function TestimonialCard({
   author,
   role,
   avatarUrl,
-  colorScheme,
 }: TestimonialCardProps) {
   return (
-    <div className="w-[350px] p-6 bg-white rounded-xl border shadow-lg mx-4 grid">
-      <div className="flex gap-2 mb-6">
-        {Array.from({ length: 4 }).map((_, i) => (
-          <div key={i} className={`w-5 h-5 rounded-md ${colorScheme}`} />
-        ))}
-      </div>
-
+    <div className="w-[520px] py-10 px-14 bg-[#F5FCFF] rounded-xl border shadow-xl mx-4 grid">
       <p className="text-gray-600 mb-6 min-h-[80px]">{text}</p>
 
       <div className="flex items-center gap-3">

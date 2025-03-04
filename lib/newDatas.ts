@@ -1,27 +1,36 @@
+import { StaticImageData } from "next/image";
+
 import one from "@/public/assets/news/one.svg";
 import two from "@/public/assets/news/two.svg";
 import three from "@/public/assets/news/three.svg";
 
-export const newsItems = [
+export interface NewsProps {
+  image: StaticImageData;
+  title: string;
+  description: string;
+  link: string;
+}
+
+export const newsItems: NewsProps[] = [
   {
     image: one,
-    title: "Major Ocean Cleanup Initiative Removes 100,000 kg of Plastic",
+    title: "Coastal Cleanup: 500+ kg of Waste Collected!",
     description:
-      "A global non-profit organization has successfully removed over 100,000 kg of plastic waste from the Pacific Ocean.",
+      "Volunteers gathered at Bali's shoreline, removing plastic waste and protecting marine life. This initiative was supported by community do....",
     link: "#",
   },
   {
     image: two,
-    title: "Coral Reefs in Danger: Urgent Conservation Needed",
+    title: "New Partnership with Ocean Guardians!",
     description:
-      "Recent studies show that over 50% of the world's coral reefs have been lost due to climate change and pollution.",
+      "Nautikara is now collaborating with Ocean Guardians to expand conservation efforts. More cleanup events and awareness campaigns co....",
     link: "#",
   },
   {
     image: three,
-    title: "Sea Turtles Return to Nesting Beaches After Conservation",
+    title: "Microplastic Levels in Coral Reefs Rising",
     description:
-      "Conservationists emphasize the need for continued efforts to ensure these marine creatures thrive in their natural habitats.",
+      "Recent studies reveal an alarming increase in microplastic pollution in coral ecosystems. Learn how you can help reduce plastic waste!",
     link: "#",
   },
 ];

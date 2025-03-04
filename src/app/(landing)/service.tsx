@@ -2,7 +2,10 @@ import { stats } from "@/lib/serviceDatas";
 
 export const Services = () => {
   return (
-    <section className="px-4 py-16 md:px-6 lg:px-8" id="services">
+    <section
+      className="w-full h-full px-4 py-16 bg-[#F5FCFF] md:px-6 lg:px-8"
+      id="services"
+    >
       <div className="mx-auto max-w-7xl">
         <div className="mb-12 text-center">
           <h2 className="mb-4 text-lg font-medium">Services</h2>
@@ -14,10 +17,10 @@ export const Services = () => {
         <div className="grid grid-cols-1 gap-8 text-center md:grid-cols-3">
           {stats.map((stat, index) => (
             <div key={index} className="p-6 ">
-              <div className="mb-4 text-4xl font-bold text-primary md:text-5xl">
+              <div className="mb-4 text-4xl font-bold md:text-5xl">
                 {stat.value}
               </div>
-              <p className="mx-auto text-sm text-gray-600 max-w-72 md:text-base">
+              <p className="mx-auto text-sm max-w-72 md:text-base">
                 {stat.description}
               </p>
             </div>

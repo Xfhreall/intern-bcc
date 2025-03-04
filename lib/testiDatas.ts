@@ -4,38 +4,33 @@ import three from "@/public/assets/avatar/image3.svg";
 
 export const testimonials = [
   {
-    text: "AQUAVERSE is a game-changer! It bridges the gap between environmental issues and real action.",
+    text: "The events section helped me find meaningful activities to join. It’s inspiring to see so many people working together for a better ocean!",
     author: "Emma Richardson",
-    role: "Marine Biologist",
-    colorScheme: "bg-secondary",
+    role: "Linda W.",
     avatar: one,
   },
   {
-    text: "Finally, a platform that not only spreads awareness but also enables real contributions. The donation transparency.",
-    author: "Michael Carter",
+    text: "I reported an issue about plastic waste in my area, and within days, a local organization took action. This platform truly makes a difference!",
+    author: "Michael T.",
     role: "Environmental Activist",
-    colorScheme: "bg-green-600",
     avatar: two,
   },
   {
-    text: "Through AQUAVERSE, I was able to organize a coastal clean-up event that reached a wide audience.",
-    author: "Sophia",
+    text: "Nautikara makes it so easy to contribute to ocean conservation. I love how transparent the donation system is, and the community is amazing!",
+    author: "Sarah L.",
     role: "Eco Tourism Business Owner",
-    colorScheme: "bg-primary",
     avatar: three,
   },
   {
-    text: "AQUAVERSE is a game-changer! It bridges the gap between environmental issues and real action.",
+    text: "The events section helped me find meaningful activities to join. It's inspiring to see so many people working together for a better ocean!",
     author: "Emma Richardson",
-    role: "Marine Biologist",
-    colorScheme: "bg-secondary",
+    role: "Linda W.",
     avatar: one,
   },
   {
-    text: "Finally, a platform that not only spreads awareness but also enables real contributions. The donation transparency.",
-    author: "Michael Carter",
+    text: "I reported an issue about plastic waste in my area, and within days, a local organization took action. This platform truly makes a difference!",
+    author: "Michael T.",
     role: "Environmental Activist",
-    colorScheme: "bg-green-600",
     avatar: two,
   },
 ];

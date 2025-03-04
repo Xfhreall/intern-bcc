@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useForgot } from "@/hooks/useForgot";
+import { Logo } from "@/public/icon/logo";
 
 const ForgotPassword = () => {
   const { form, onSubmit, isEmailSent } = useForgot();
@@ -21,7 +22,7 @@ const ForgotPassword = () => {
       <div className="flex items-center justify-center min-h-screen">
         <div className="w-full max-w-md p-8 mx-auto space-y-6 bg-white rounded-lg shadow-xl">
           <div className="flex flex-col items-center justify-center space-y-4">
-            <div className="w-16 h-16 rounded-lg bg-primary" />
+            <Logo className="size-16" />
             <div className="text-center">
               <h1 className="text-2xl font-semibold text-gray-800">
                 Your Link Has Been Sent!
@@ -58,7 +59,7 @@ const ForgotPassword = () => {
     <div className="flex items-center justify-center min-h-screen">
       <div className="w-full max-w-md p-8 mx-auto space-y-6 bg-white rounded-lg shadow-xl">
         <div className="flex flex-col items-center justify-center space-y-4">
-          <div className="w-16 h-16 rounded-lg bg-primary" />
+          <Logo className="size-16" />
           <div className="text-center">
             <h1 className="text-2xl font-semibold text-gray-800">
               Forgot Your Password?

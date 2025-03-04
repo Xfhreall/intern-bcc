@@ -11,6 +11,7 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 import { useOtp } from "@/hooks/useOtp";
+import { Logo } from "@/public/icon/logo";
 
 const OTPVerification = () => {
   const { otp, handleSubmit, setOtp } = useOtp();
@@ -18,7 +19,7 @@ const OTPVerification = () => {
   return (
     <div className="w-full max-w-md p-8 mx-auto space-y-6 bg-white rounded-lg shadow-xl">
       <div className="flex flex-col items-center justify-center space-y-4">
-        <div className="w-16 h-16 rounded-lg bg-primary" />
+        <Logo className="size-16" />
         <div className="text-center">
           <h1 className="text-2xl font-semibold text-gray-800">
             OTP Has Been Sent

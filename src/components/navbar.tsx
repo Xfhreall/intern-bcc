@@ -8,21 +8,22 @@ import { Button } from "@heroui/button";
 import { Link } from "@heroui/link";
 import NextLink from "next/link";
 
+import { LogoWhite } from "@/public/icon/logo";
 import { siteConfig } from "@/config/site";
 
 export const Navbar = () => {
   return (
-    <HeroUINavbar className="py-4" maxWidth="xl" position="sticky">
+    <HeroUINavbar className="py-1 bg-primary" maxWidth="xl" position="sticky">
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
         <NavbarBrand as="li" className="gap-3 max-w-fit">
-          <div className="w-6 h-6 bg-gray-400 rounded-lg" />
+          <LogoWhite className="w-9 h-9" />
           <NextLink className="flex items-center justify-start " href="/">
-            <p className="text-2xl font-bold text-inherit">Nautikara</p>
+            <p className="text-2xl font-bold text-white">Nautikara</p>
           </NextLink>
         </NavbarBrand>
       </NavbarContent>
       <NavbarContent justify="center">
-        <div className="py-2 text-black rounded-lg px-11">
+        <div className="py-2 text-white rounded-lg px-11">
           <ul className="justify-start hidden gap-12 font-normal md:flex">
             {siteConfig.navItems.map((item) => (
               <NavbarItem key={item.href}>
@@ -38,7 +39,7 @@ export const Navbar = () => {
         <NavbarItem className="hidden md:flex">
           <Button
             as={Link}
-            className="px-16 text-sm font-normal text-white bg-primary rounded-[10px]"
+            className="px-16 text-sm font-semibold bg-white text-primary rounded-[10px]"
             href="/login"
           >
             Login

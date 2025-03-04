@@ -15,7 +15,7 @@ export const features = [
   },
   {
     icon: CheckIcon,
-    title: "Real Impact",
+    title: "Real Impact For Us",
     description:
       "Every report is followed up by a community of trusted partners.",
     iconColor: "text-[#4CAF50]",

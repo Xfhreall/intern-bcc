@@ -16,6 +16,7 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useLogin } from "@/hooks/useLogin";
 import { GoogleIcon } from "@/public/icon/googleIcon";
+import { Logo } from "@/public/icon/logo";
 
 const Login = () => {
   const { form, onSubmit } = useLogin();
@@ -24,7 +25,7 @@ const Login = () => {
   return (
     <div className="w-full max-w-md p-8 mx-auto space-y-6 bg-white rounded-lg shadow-xl">
       <div className="flex flex-col items-center justify-center mb-6">
-        <div className="w-16 h-16 mb-4 rounded-lg bg-[#0077b6]" />
+        <Logo className="size-16" />
         <h1 className="text-2xl font-semibold text-center text-gray-800">
           Welcome Back!
         </h1>

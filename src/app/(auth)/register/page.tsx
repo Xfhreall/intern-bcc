@@ -14,6 +14,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useRegister } from "@/src/hooks/useRegister";
 import { GoogleIcon } from "@/public/icon/googleIcon";
+import { Logo } from "@/public/icon/logo";
 
 const Register = () => {
   const { form, onSubmit } = useRegister();
@@ -23,7 +24,7 @@ const Register = () => {
   return (
     <div className="w-full max-w-md p-8 mx-auto space-y-6 bg-white rounded-lg shadow-xl">
       <div className="flex flex-col items-center justify-center space-y-4">
-        <div className="w-16 h-16 rounded-lg bg-primary" />
+        <Logo className="size-16" />
         <div className="text-center">
           <h1 className="text-2xl font-semibold text-gray-800">
             Register now!

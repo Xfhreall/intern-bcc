@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 
 import { Button } from "@/components/ui/button";
+import { Logo } from "@/public/icon/logo";
 
 export default function Error({
   error,
@@ -18,7 +19,7 @@ export default function Error({
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-50">
       <div className="w-full max-w-md p-8 mx-auto space-y-6 text-center bg-white rounded-lg shadow-sm">
-        <div className="w-16 h-16 mx-auto rounded-lg bg-primary" />
+        <Logo className="mx-auto size-14" />
         <h1 className="text-2xl font-semibold text-gray-800">
           Oops! Something went wrong
         </h1>

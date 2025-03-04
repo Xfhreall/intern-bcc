@@ -46,9 +46,7 @@ export const Testimoni = () => {
   return (
     <section className="py-16 overflow-hidden" id="testimoni">
       <div className="mx-auto mb-12 space-y-4 text-center">
-        <h2 className="mb-2 text-lg font-semibold text-gray-600">
-          Testimonial
-        </h2>
+        <h2 className="mb-2 text-2xl font-semibold">Testimonial</h2>
         <h3 className="text-4xl font-bold text-gray-900">
           What They Say About Us
         </h3>
@@ -72,7 +70,6 @@ export const Testimoni = () => {
                 key={index}
                 author={testimonial.author}
                 avatarUrl={testimonial.avatar}
-                colorScheme={testimonial.colorScheme}
                 rating={4}
                 role={testimonial.role}
                 text={testimonial.text}
