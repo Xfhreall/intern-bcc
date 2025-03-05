@@ -2,6 +2,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Eye, EyeOff } from "lucide-react";
+import { useParams } from "next/navigation";
 
 import { Input } from "@/components/ui/input";
 import {
@@ -16,6 +17,8 @@ import { useResetPassword } from "@/hooks/useResetPassword";
 import { Logo } from "@/public/icon/logo";
 
 const ResetPassword = () => {
+  const params = useParams();
+  const resetToken = params.resetToken as string;
   const { form, onSubmit } = useResetPassword();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -29,6 +32,7 @@ const ResetPassword = () => {
             <h1 className="text-2xl font-semibold text-gray-800">
               Change Your Password
             </h1>
+            <h1>{resetToken}</h1>
             <p className="mt-2 text-gray-600">Make sure you can remember it!</p>
           </div>
         </div>

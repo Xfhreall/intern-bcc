@@ -1,14 +1,94 @@
+"use client";
+
+import type React from "react";
+
 import { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
+
+import { useAuthStore } from "@/store/authStore";
+import { VerifyOtpResponse } from "@/types/authTypes";
 
 export const useOtp = () => {
+  const router = useRouter();
   const [otp, setOtp] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const registrationData = useAuthStore((state) => state.registrationData);
+  const clearRegistrationData = useAuthStore(
+    (state) => state.clearRegistrationData
+  );
+  const setTokens = useAuthStore((state) => state.setTokens);
+
+  const verifyOtpMutation = useMutation({
+    mutationFn: async (otpValue: string) => {
+      if (!registrationData?.email) {
+        throw new Error("Email not found. Please register first.");
+      }
+
+      try {
+        const response = await axios.post<VerifyOtpResponse>(
+          "/api/auth/verify-otp",
+          {
+            email: registrationData.email,
+            otp: otpValue,
+          }
+        );
+
+        const { accessToken, refreshToken } = response.data;
+
+        if (accessToken) {
+          localStorage.setItem("accessToken", accessToken);
+        }
+
+        if (refreshToken) {
+          localStorage.setItem("refreshToken", refreshToken);
+        }
+
+        setTokens({ accessToken, refreshToken });
+
+        await signIn("credentials", {
+          redirect: false,
+          email: registrationData.email,
+          password: registrationData?.password,
+        });
+
+        clearRegistrationData();
+
+        return response.data;
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          throw new Error(
+            error.response?.data?.message || "OTP verification failed"
+          );
+        }
+        throw error;
+      }
+    },
+    onSuccess: () => {
+      setTimeout(() => {
+        router.push("/dashboard");
+      }, 1500);
+    },
+  });
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (otp.length === 6) {
-      alert(`Verifying OTP: ${otp}`);
+      await verifyOtpMutation.mutateAsync(otp);
     }
   };
 
-  return { otp, setOtp, handleSubmit };
+  return {
+    otp,
+    setOtp,
+    handleSubmit,
+    email: registrationData?.email,
+    isVerifying: verifyOtpMutation.isPending,
+    isSuccess: verifyOtpMutation.isSuccess,
+    isError: verifyOtpMutation.isError,
+    error: verifyOtpMutation.error,
+    reset: verifyOtpMutation.reset,
+  };
 };
