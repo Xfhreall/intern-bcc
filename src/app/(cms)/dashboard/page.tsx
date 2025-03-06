@@ -34,11 +34,11 @@ export default function DashboardPage() {
   }
 
   if (status === "unauthenticated") {
-    return null; // Will redirect in useEffect
+    return null;
   }
 
   return (
-    <div className="container py-8 mx-auto">
+    <div className="w-full py-8 mx-auto">
       <div className="flex items-center justify-between mb-8">
         <h1 className="text-3xl font-bold">Dashboard</h1>
         <LogoutButton />
@@ -46,7 +46,7 @@ export default function DashboardPage() {
 
       <div className="p-6 bg-white rounded-lg shadow">
         <h2 className="mb-4 text-xl font-semibold">
-          Welcome, {session?.user?.name || session?.user?.email}!
+          Welcome, {session?.user?.email}!
         </h2>
         <p className="text-gray-600">You are now logged in to your account.</p>
 

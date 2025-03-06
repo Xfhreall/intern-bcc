@@ -7,12 +7,14 @@ import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
+import { addToast } from "@heroui/toast";
 
 import { useAuthStore } from "@/store/authStore";
 import { VerifyOtpResponse } from "@/types/authTypes";
 
 export const useOtp = () => {
   const router = useRouter();
+  const [error, setError] = useState("");
   const [otp, setOtp] = useState("");
 
   const registrationData = useAuthStore((state) => state.registrationData);
@@ -54,16 +56,41 @@ export const useOtp = () => {
           password: registrationData?.password,
         });
 
+        addToast({
+          color: "success",
+          variant: "flat",
+          title: "Verifying OTP Successfully",
+          shouldShowTimeoutProgress: true,
+          timeout: 3000,
+          description: "You have successfully registered.",
+        });
+
         clearRegistrationData();
 
         return response.data;
       } catch (error) {
+        let errorMessage = "An unexpected error occurred";
+
         if (axios.isAxiosError(error)) {
-          throw new Error(
-            error.response?.data?.message || "OTP verification failed"
-          );
+          errorMessage =
+            error.response?.data?.message ||
+            (typeof error.response?.data === "string"
+              ? error.response.data
+              : "Register failed");
+        } else if (error instanceof Error) {
+          errorMessage = error.message;
         }
-        throw error;
+        setError(errorMessage);
+        addToast({
+          color: "danger",
+          variant: "bordered",
+          title: "Authentication Error",
+          shouldShowTimeoutProgress: true,
+          timeout: 3000,
+          description: errorMessage,
+        });
+
+        throw new Error(errorMessage);
       }
     },
     onSuccess: () => {
@@ -88,7 +115,7 @@ export const useOtp = () => {
     isVerifying: verifyOtpMutation.isPending,
     isSuccess: verifyOtpMutation.isSuccess,
     isError: verifyOtpMutation.isError,
-    error: verifyOtpMutation.error,
+    error,
     reset: verifyOtpMutation.reset,
   };
 };

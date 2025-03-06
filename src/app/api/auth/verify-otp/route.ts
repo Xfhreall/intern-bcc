@@ -21,8 +21,6 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(response.data, { status: response.status });
   } catch (error) {
-    console.error("OTP verification error:", error);
-
     if (axios.isAxiosError(error)) {
       return NextResponse.json(
         error.response?.data || { message: "OTP verification failed" },

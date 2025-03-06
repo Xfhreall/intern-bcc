@@ -11,8 +11,6 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(response.data, { status: response.status });
   } catch (error) {
-    console.error("Login error:", error);
-
     if (axios.isAxiosError(error)) {
       return NextResponse.json(
         error.response?.data || { message: "Authentication failed" },

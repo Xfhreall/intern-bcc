@@ -3,7 +3,7 @@ import { stats } from "@/lib/serviceDatas";
 export const Services = () => {
   return (
     <section
-      className="w-full h-full px-4 py-16 bg-[#F5FCFF] md:px-6 lg:px-8"
+      className="w-full h-full px-4 py-16 bg-white shadow-md md:px-6 lg:px-8"
       id="services"
     >
       <div className="mx-auto max-w-7xl">

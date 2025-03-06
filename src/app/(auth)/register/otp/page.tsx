@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
-import OtpForm from "@/components/otp-form";
+import OtpForm from "@/components/forms/otp-form";
 import { useAuthStore } from "@/store/authStore";
 
 export default function VerifyOtpPage() {

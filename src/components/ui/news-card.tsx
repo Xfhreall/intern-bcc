@@ -28,7 +28,7 @@ const NewsCard = ({ data }: { data: NewsProps[] }) => {
                   className={`rounded-[10px] object-cover transition-opacity duration-300 ${loading ? "opacity-0" : "opacity-100"}`}
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   src={item.image.src}
-                  onLoadingComplete={() => setLoading(false)}
+                  onLoad={() => setLoading(false)}
                 />
               </div>
               <h4 className="overflow-hidden text-xl font-bold text-ellipsis display-webkit-box -webkit-line-clamp-2 -webkit-box-orient-vertical">

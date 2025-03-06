@@ -43,14 +43,13 @@ const handler = NextAuth({
 
           return user;
         } catch (error) {
-          return null;
+          throw error;
         }
       },
     }),
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID || "",
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
-      // We're using a custom flow, so we'll redirect to our custom endpoint
       authorization: {
         params: {
           redirect_uri: `${process.env.NEXT_PUBLIC_BASE_URL}/auth/google`,

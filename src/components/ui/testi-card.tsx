@@ -15,7 +15,7 @@ export function TestimonialCard({
   avatarUrl,
 }: TestimonialCardProps) {
   return (
-    <div className="w-[520px] py-10 px-14 bg-[#F5FCFF] rounded-xl border shadow-xl mx-4 grid">
+    <div className="w-[520px] py-10 px-14 bg-white rounded-xl border shadow-xl mx-4 grid">
       <p className="text-gray-600 mb-6 min-h-[80px]">{text}</p>
 
       <div className="flex items-center gap-3">

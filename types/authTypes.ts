@@ -1,12 +1,14 @@
+//register
 export interface RegisterPayload {
   email: string;
-  password: string;
+  password?: string;
 }
 
 export interface RegisterResponse {
   message: string;
 }
 
+//otp
 export interface OtpPayload {
   email: string;
   otp: string;
@@ -17,19 +19,6 @@ export interface OtpResponse {
   accessToken: string;
   refreshToken: string;
 }
-
-export interface LoginPayload {
-  email: string;
-  password: string;
-  rememberMe: boolean;
-}
-
-export interface LoginResponse {
-  message: string;
-  accessToken: string;
-  refreshToken: string;
-}
-
 export interface VerifyOtpPayload {
   email: string;
   otp: string;
@@ -45,10 +34,26 @@ export interface OtpVerificationFormProps {
   onSuccess?: () => void;
 }
 
-export interface UserRegistrationData {
+//login
+export interface LoginPayload {
   email: string;
-  name?: string;
-  password?: string;
+  password: string;
+  rememberMe: boolean;
+}
+
+export interface LoginResponse {
+  message: string;
+  accessToken: string;
+  refreshToken: string;
+}
+
+//forgot password
+export interface ForgotPasswordPayload {
+  email: string;
+}
+
+export interface ForgotPasswordResponse {
+  message: string;
 }
 
 export interface AuthTokens {

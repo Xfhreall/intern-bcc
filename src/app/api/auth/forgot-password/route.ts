@@ -7,31 +7,28 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
 
-    if (!body.refreshToken) {
+    if (!body.email) {
       return NextResponse.json(
-        { message: "Refresh token is required" },
+        { message: "Email are required" },
         { status: 400 }
       );
     }
 
-    const response = await api.post("/auth/refresh-token", {
-      refreshToken: body.refreshToken,
+    const response = await api.post("/auth/forgot-password", {
+      email: body.email,
     });
 
     return NextResponse.json(response.data, { status: response.status });
   } catch (error) {
     if (axios.isAxiosError(error)) {
       return NextResponse.json(
-        error.response?.data || { message: "Token refresh failed" },
+        error.response?.data || { message: "Request failed" },
         {
           status: error.response?.status || 500,
         }
       );
     }
 
-    return NextResponse.json(
-      { message: "Token refresh failed" },
-      { status: 500 }
-    );
+    return NextResponse.json({ message: "Request failed" }, { status: 500 });
   }
 }

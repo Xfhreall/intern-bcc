@@ -1,14 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { Eye, EyeOff, AlertCircle } from "lucide-react";
+import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 
-import { useLogin } from "@/hooks/use-auth";
+import { useLoginForm } from "@/hooks/useLogin";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
@@ -21,26 +19,13 @@ import { Button } from "@/components/ui/button";
 import { GoogleIcon } from "@/public/icon/googleIcon";
 import { Logo } from "@/public/icon/logo";
 import { api } from "@/lib/axios";
-
 export function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
-  const form = useForm({
-    defaultValues: {
-      email: "",
-      password: "",
-      rememberMe: false,
-    },
+  const { form, onSubmit, isLoading } = useLoginForm();
+
+  const handleSubmit = form.handleSubmit((data) => {
+    onSubmit(data);
   });
-
-  const login = useLogin();
-
-  const onSubmit = (data: {
-    email: string;
-    password: string;
-    rememberMe: boolean;
-  }) => {
-    login.mutate(data);
-  };
 
   return (
     <div className="w-full max-w-md p-8 mx-auto space-y-6 bg-white rounded-lg shadow-xl">
@@ -51,11 +36,9 @@ export function LoginForm() {
         </h1>
         <p className="text-center text-gray-600">Enter your data to continue</p>
       </div>
+
       <Form {...form}>
-        <form
-          className="flex flex-col gap-5"
-          onSubmit={form.handleSubmit(onSubmit)}
-        >
+        <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
             <FormField
@@ -121,7 +104,7 @@ export function LoginForm() {
                 <div className="flex items-center space-x-2">
                   <Checkbox
                     checked={field.value}
-                    className="h-5 w-5 rounded border-gray-300 text-[#0077b6]"
+                    className="w-5 h-5 border-gray-300 rounded text-primary"
                     id="rememberMe"
                     onCheckedChange={field.onChange}
                   />
@@ -130,35 +113,19 @@ export function LoginForm() {
               )}
             />
             <Link
-              className="text-sm text-[#0077b6] hover:underline"
+              className="text-sm text-primary hover:underline"
               href="/forgot-password"
             >
               Forgot password?
             </Link>
           </div>
 
-          {login.error && (
-            <Alert
-              variant="destructive"
-              className="inline-flex items-center gap-2"
-            >
-              <div>
-                <AlertCircle className="w-4 h-4" />
-              </div>
-              <div>
-                <AlertDescription>
-                  {login.error.message ||
-                    "Failed to login. Please check your credentials."}
-                </AlertDescription>
-              </div>
-            </Alert>
-          )}
-
           <Button
-            className="w-full h-12 mt-2 text-white bg-[#0077b6] hover:bg-[#006da8]"
+            className="w-full h-12 mt-2 text-white bg-primary hover:bg-[#006da8]"
+            disabled={isLoading}
             type="submit"
           >
-            {login.isPending ? "Logging in..." : "Login"}
+            {isLoading ? "Logging in..." : "Login"}
           </Button>
         </form>
       </Form>
@@ -174,13 +141,13 @@ export function LoginForm() {
         onClick={() => api.get("/auth/google")}
       >
         <GoogleIcon />
-        Google
+        <span className="ml-2">Google</span>
       </Button>
 
       <div className="mt-6 text-sm text-center text-gray-700">
         Don&apos;t have an account?{" "}
         <Link
-          className="font-medium text-[#0077b6] hover:underline"
+          className="font-medium text-primary hover:underline"
           href="/register"
         >
           Sign Up

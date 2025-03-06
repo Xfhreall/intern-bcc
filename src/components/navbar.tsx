@@ -27,7 +27,11 @@ export const Navbar = () => {
           <ul className="justify-start hidden gap-12 font-normal md:flex">
             {siteConfig.navItems.map((item) => (
               <NavbarItem key={item.href}>
-                <NextLink color="foreground" href={item.href}>
+                <NextLink
+                  className="transition-all duration-300 hover:font-bold"
+                  color="foreground"
+                  href={item.href}
+                >
                   {item.label}
                 </NextLink>
               </NavbarItem>
@@ -39,7 +43,7 @@ export const Navbar = () => {
         <NavbarItem className="hidden md:flex">
           <Button
             as={Link}
-            className="px-16 text-sm font-semibold bg-white text-primary rounded-[10px]"
+            className="px-16 text-sm font-semibold bg-white text-primary rounded-[5px]"
             href="/login"
           >
             Login

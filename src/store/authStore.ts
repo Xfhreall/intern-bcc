@@ -1,11 +1,11 @@
-import type { AuthTokens, UserRegistrationData } from "@/types/authTypes";
+import type { AuthTokens, RegisterPayload } from "@/types/authTypes";
 
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 interface AuthState {
-  registrationData: UserRegistrationData | null;
-  setRegistrationData: (data: UserRegistrationData) => void;
+  registrationData: RegisterPayload | null;
+  setRegistrationData: (data: RegisterPayload) => void;
   clearRegistrationData: () => void;
 
   tokens: AuthTokens | null;

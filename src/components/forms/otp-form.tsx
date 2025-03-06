@@ -3,7 +3,6 @@ import type React from "react";
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { CheckCircle, AlertCircle } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { GoogleIcon } from "@/public/icon/googleIcon";
@@ -17,16 +16,7 @@ import { Logo } from "@/public/icon/logo";
 
 const OtpForm = () => {
   const router = useRouter();
-  const {
-    otp,
-    setOtp,
-    handleSubmit,
-    email,
-    isVerifying,
-    isSuccess,
-    isError,
-    error,
-  } = useOtp();
+  const { otp, setOtp, handleSubmit, email, isVerifying, isSuccess } = useOtp();
 
   if (!email) {
     if (typeof window !== "undefined") {
@@ -47,19 +37,6 @@ const OtpForm = () => {
           <p className="mt-2 text-gray-600">Check your email now</p>
         </div>
       </div>
-      {isError && (
-        <div className="flex items-center gap-2 p-3 text-sm text-white bg-red-500 rounded">
-          <AlertCircle className="w-4 h-4" />
-          {error instanceof Error ? error.message : "Verification failed"}
-        </div>
-      )}
-
-      {isSuccess && (
-        <div className="flex items-center gap-2 p-3 text-sm text-white bg-green-500 rounded">
-          <CheckCircle className="w-4 h-4" />
-          OTP verified successfully!
-        </div>
-      )}
 
       <form className="space-y-6" onSubmit={handleSubmit}>
         <div className="grid justify-center gap-2">
