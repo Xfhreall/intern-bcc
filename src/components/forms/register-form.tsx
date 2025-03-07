@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
-import { Eye, EyeOff } from "lucide-react";
+import { ArrowLeft, Eye, EyeOff } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -23,13 +23,22 @@ const RegisterForm = () => {
 
   return (
     <div className="w-full max-w-md p-8 mx-auto space-y-6 bg-white rounded-lg shadow-xl">
-      <div className="flex flex-col items-center justify-center space-y-4">
-        <Logo className="size-16" />
+      <div className="relative flex flex-col items-center justify-center mb-6">
+        <Link
+          className="absolute top-0 flex items-center self-start gap-1 text-primary hover:underline"
+          href="/"
+        >
+          <ArrowLeft className="size-5" />
+          Home
+        </Link>
+        <Logo className="mb-4 size-16" />
         <div className="text-center">
-          <h1 className="text-2xl font-semibold text-gray-800">
+          <h1 className="text-3xl font-semibold text-gray-800">
             Register now!
           </h1>
-          <p className="mt-2 text-gray-600">Join together to protect the sea</p>
+          <p className="mt-2 text-sm text-gray-600">
+            Join and start contributing to protecting marine life!
+          </p>
         </div>
       </div>
       <Form {...form}>
@@ -50,7 +59,7 @@ const RegisterForm = () => {
                     <Input
                       placeholder="example@gmail.com"
                       {...field}
-                      className="h-12 border-gray-300"
+                      className="h-12 border-gray-400"
                       type="email"
                     />
                   </FormControl>
@@ -76,7 +85,7 @@ const RegisterForm = () => {
                       <Input
                         placeholder="••••••••"
                         {...field}
-                        className="h-12 pr-10 border-gray-300"
+                        className="h-12 pr-10 border-gray-400"
                         type={showPassword ? "text" : "password"}
                       />
                       <button
@@ -114,7 +123,7 @@ const RegisterForm = () => {
                       <Input
                         placeholder="••••••••"
                         {...field}
-                        className="h-12 pr-10 border-gray-300"
+                        className="h-12 pr-10 border-gray-400"
                         type={showConfirmPassword ? "text" : "password"}
                       />
                       <button
@@ -171,7 +180,7 @@ const RegisterForm = () => {
         <div className="flex-grow h-px bg-gray-300" />
       </div>
       <Button
-        className="w-full h-12 text-gray-700 bg-white border border-gray-300 hover:bg-gray-50"
+        className="w-full h-12 text-gray-700 bg-white border border-gray-400 hover:bg-gray-50"
         variant="outline"
         onClick={() => alert("init dummy :D")}
       >

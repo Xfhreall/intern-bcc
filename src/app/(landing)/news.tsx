@@ -17,7 +17,7 @@ export const News = () => {
               className="flex items-center font-medium hover:underline text-primary hover:brightness-75"
               href="/news-page"
             >
-              {"More >"}
+              {"Read the full news >"}
             </Link>
           </div>
         </div>

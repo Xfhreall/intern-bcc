@@ -1,9 +1,12 @@
-import Link from "next/link";
+"use client";
+import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/public/icon/logo";
 
 export default function NotFound() {
+  const router = useRouter();
+
   return (
     <div className="flex items-center justify-center min-h-screen">
       <div className="w-full max-w-md p-8 mx-auto space-y-6 text-center bg-white rounded-lg shadow-xl">
@@ -14,12 +17,12 @@ export default function NotFound() {
         <p className="text-gray-600">
           Oops! The page you&apos;re looking for doesn&apos;t exist.
         </p>
-        <div className="pt-6">
+        <div className="pt-4">
           <Button
-            asChild
-            className="w-full h-12 bg-[#0077b6] hover:bg-[#0077b6]/90 text-white"
+            className="w-full h-12 text-white bg-primary hover:bg-primary/90"
+            onClick={() => router.back()}
           >
-            <Link href="/">Back to Home</Link>
+            Back to previous page
           </Button>
         </div>
       </div>
