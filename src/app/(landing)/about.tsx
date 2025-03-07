@@ -18,10 +18,10 @@ const About = () => {
 
         <div className="grid w-full gap-8 my-auto lg:w-1/2">
           <span className="space-y-4">
-            <h2 className="text-2xl font-medium">About</h2>
-            <h3 className="text-4xl font-bold">What is NAUTIKARA?</h3>
+            <h2 className="text-2xl font-semibold">About</h2>
+            <h3 className="text-4xl font-semibold">We Are Nautikara</h3>
           </span>
-          <p className="font-light leading-loose">
+          <p className="font-[#757575] leading-loose font-light">
             <span className="font-bold">Nautikara</span> is a digital platform
             that connects people, communities and stakeholders in efforts to
             report pollution, conservation donations and marine environmental

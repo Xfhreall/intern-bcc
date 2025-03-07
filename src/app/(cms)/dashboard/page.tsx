@@ -13,12 +13,10 @@ export default function DashboardPage() {
   const [refreshToken, setRefreshToken] = useState("");
 
   useEffect(() => {
-    // Check authentication status
     if (status === "unauthenticated") {
       router.push("/login");
     }
 
-    // Get tokens from localStorage
     if (typeof window !== "undefined") {
       setAccessToken(localStorage.getItem("accessToken") || "");
       setRefreshToken(localStorage.getItem("refreshToken") || "");
@@ -27,7 +25,7 @@ export default function DashboardPage() {
 
   if (status === "loading") {
     return (
-      <div className="flex items-center justify-center h-screen">
+      <div className="flex items-center justify-center h-screen w-svw">
         Loading...
       </div>
     );
@@ -38,13 +36,13 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="w-full py-8 mx-auto">
+    <div className="w-full p-8">
       <div className="flex items-center justify-between mb-8">
         <h1 className="text-3xl font-bold">Dashboard</h1>
         <LogoutButton />
       </div>
 
-      <div className="p-6 bg-white rounded-lg shadow">
+      <div className="max-w-6xl p-6 bg-white rounded-lg ">
         <h2 className="mb-4 text-xl font-semibold">
           Welcome, {session?.user?.email}!
         </h2>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
 import { useLoginForm } from "@/hooks/useLogin";
@@ -29,12 +29,21 @@ export function LoginForm() {
 
   return (
     <div className="w-full max-w-md p-8 mx-auto space-y-6 bg-white rounded-lg shadow-xl">
-      <div className="flex flex-col items-center justify-center mb-6">
-        <Logo className="size-16" />
+      <div className="relative flex flex-col items-center justify-center mb-6">
+        <Link
+          className="absolute top-0 flex items-center self-start gap-1 text-primary hover:underline"
+          href="/"
+        >
+          <ArrowLeft className="size-5" />
+          Home
+        </Link>
+        <Logo className="mb-4 size-16" />
         <h1 className="text-2xl font-semibold text-center text-gray-800">
           Welcome Back!
         </h1>
-        <p className="text-center text-gray-600">Enter your data to continue</p>
+        <p className="text-sm text-center text-gray-600">
+          Explore, donate and help protect marine life with us!
+        </p>
       </div>
 
       <Form {...form}>

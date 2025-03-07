@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/input-otp";
 import { useOtp } from "@/hooks/useOtp";
 import { Logo } from "@/public/icon/logo";
+import { ArrowLeft } from "lucide-react";
 
 const OtpForm = () => {
   const router = useRouter();
@@ -28,13 +29,22 @@ const OtpForm = () => {
 
   return (
     <div className="w-full max-w-md p-8 mx-auto space-y-6 bg-white rounded-lg shadow-xl">
-      <div className="flex flex-col items-center justify-center space-y-4">
-        <Logo className="size-16" />
+      <div className="relative flex flex-col items-center justify-center mb-6">
+        <Link
+          className="absolute top-0 flex items-center self-start gap-1 text-primary hover:underline"
+          href="/"
+        >
+          <ArrowLeft className="size-5" />
+          Home
+        </Link>
+        <Logo className="mb-4 size-16" />
         <div className="text-center">
-          <h1 className="text-2xl font-semibold text-gray-800">
-            OTP Has Been Sent
+          <h1 className="text-3xl font-semibold text-gray-800">
+            Verify Your Email!
           </h1>
-          <p className="mt-2 text-gray-600">Check your email now</p>
+          <p className="mt-2 text-sm text-gray-600">
+            Check your email to get the OTP Code
+          </p>
         </div>
       </div>
 
@@ -43,27 +53,27 @@ const OtpForm = () => {
           <InputOTP required maxLength={6} value={otp} onChange={setOtp}>
             <InputOTPGroup className="space-x-2">
               <InputOTPSlot
-                className="text-xl font-semibold text-center border border-gray-300 rounded-lg w-14 h-14 focus:outline-none"
+                className="text-xl font-semibold text-center border border-gray-500 rounded-lg w-14 h-14 focus:outline-none"
                 index={0}
               />
               <InputOTPSlot
-                className="text-xl font-semibold text-center border border-gray-300 rounded-lg w-14 h-14 focus:outline-none"
+                className="text-xl font-semibold text-center border border-gray-500 rounded-lg w-14 h-14 focus:outline-none"
                 index={1}
               />
               <InputOTPSlot
-                className="text-xl font-semibold text-center border border-gray-300 rounded-lg w-14 h-14 focus:outline-none"
+                className="text-xl font-semibold text-center border border-gray-500 rounded-lg w-14 h-14 focus:outline-none"
                 index={2}
               />
               <InputOTPSlot
-                className="text-xl font-semibold text-center border border-gray-300 rounded-lg w-14 h-14 focus:outline-none"
+                className="text-xl font-semibold text-center border border-gray-500 rounded-lg w-14 h-14 focus:outline-none"
                 index={3}
               />
               <InputOTPSlot
-                className="text-xl font-semibold text-center border border-gray-300 rounded-lg w-14 h-14 focus:outline-none"
+                className="text-xl font-semibold text-center border border-gray-500 rounded-lg w-14 h-14 focus:outline-none"
                 index={4}
               />
               <InputOTPSlot
-                className="text-xl font-semibold text-center border border-gray-300 rounded-lg w-14 h-14 focus:outline-none"
+                className="text-xl font-semibold text-center border border-gray-500 rounded-lg w-14 h-14 focus:outline-none"
                 index={5}
               />
             </InputOTPGroup>
@@ -75,7 +85,7 @@ const OtpForm = () => {
           disabled={otp.length !== 6 || isVerifying || isSuccess}
           type="submit"
         >
-          {isVerifying ? "Loading" : "Enter"}
+          {isVerifying ? "Verifying..." : "Verify"}
         </Button>
       </form>
 
@@ -97,7 +107,7 @@ const OtpForm = () => {
       </div>
 
       <Button
-        className="w-full h-12 text-gray-700 bg-white border border-gray-300 hover:bg-gray-50"
+        className="w-full h-12 text-gray-700 bg-white border border-gray-400 hover:bg-gray-50"
         variant="outline"
         onClick={() => alert("Google sign in")}
       >

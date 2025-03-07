@@ -34,7 +34,7 @@ const NewsCard = ({ data }: { data: NewsProps[] }) => {
               <h4 className="overflow-hidden text-xl font-bold text-ellipsis display-webkit-box -webkit-line-clamp-2 -webkit-box-orient-vertical">
                 {item.title}
               </h4>
-              <p className="overflow-hidden text-gray-600 text-ellipsis display-webkit-box -webkit-line-clamp-3 -webkit-box-orient-vertical">
+              <p className="overflow-hidden text-[#212121] text-ellipsis display-webkit-box -webkit-line-clamp-3 -webkit-box-orient-vertical">
                 {item.description}
               </p>
               <Link
