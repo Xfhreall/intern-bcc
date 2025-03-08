@@ -32,7 +32,6 @@ const ResetPasswordForm = () => {
                         <h1 className="text-2xl font-semibold text-gray-800">
                             Change Your Password
                         </h1>
-                        <h1>{resetToken}</h1>
                         <p className="mt-2 text-gray-600">Make sure you can remember it!</p>
                     </div>
                 </div>
