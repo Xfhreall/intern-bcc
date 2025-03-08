@@ -4,11 +4,11 @@ import type { Reports } from "@/types/reportTypes"
 
 import { format } from "date-fns"
 import { MapPin, Calendar, User, AlertCircle, Clock, ImageIcon, RefreshCw } from "lucide-react"
+import { addToast } from "@heroui/toast"
 
 import { useUserReports } from "@/hooks/useSeaStatus"
 import { Button } from "@/components/ui/button"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { addToast } from "@heroui/toast"
 
 // Status badge component with appropriate colors
 const StatusBadge = ({ status }: { status: string }) => {

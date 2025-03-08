@@ -44,6 +44,7 @@
   "axios": "^1.7.9",
   "class-variance-authority": "^0.7.1",
   "clsx": "^2.1.1",
+  "date-fns": "^4.1.0",
   "framer-motion": "^12.4.10",
   "input-otp": "^1.4.2",
   "intl-messageformat": "^10.5.0",
@@ -62,6 +63,7 @@
  "devDependencies": {
   "@next/eslint-plugin-next": "15.0.4",
   "@react-types/shared": "3.25.0",
+  "@types/date-fns": "^2.5.3",
   "@types/node": "20.5.7",
   "@types/react": "18.3.3",
   "@types/react-dom": "18.3.0",
