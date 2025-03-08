@@ -3,6 +3,7 @@
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { Snippet } from "@heroui/snippet";
 
 import { LogoutButton } from "@/components/ui/logout-button";
 
@@ -16,7 +17,6 @@ export default function DashboardPage() {
     if (status === "unauthenticated") {
       router.push("/login");
     }
-
     if (typeof window !== "undefined") {
       setAccessToken(localStorage.getItem("accessToken") || "");
       setRefreshToken(localStorage.getItem("refreshToken") || "");
@@ -42,9 +42,9 @@ export default function DashboardPage() {
         <LogoutButton />
       </div>
 
-      <div className="max-w-6xl p-6 bg-white rounded-lg ">
+      <div className="w-full p-6 bg-white rounded-lg">
         <h2 className="mb-4 text-xl font-semibold">
-          Welcome, {session?.user?.email}!
+          Welcome, {session?.user.name}!
         </h2>
         <p className="text-gray-600">You are now logged in to your account.</p>
 
@@ -60,15 +60,15 @@ export default function DashboardPage() {
           <div className="mt-2 space-y-2">
             <div>
               <p className="font-medium">Access Token:</p>
-              <p className="p-2 overflow-x-auto text-xs bg-gray-100 rounded whitespace-nowrap">
+              <Snippet className="p-2 overflow-x-auto text-xs bg-gray-100 rounded whitespace-nowrap">
                 {accessToken}
-              </p>
+              </Snippet>
             </div>
             <div>
               <p className="font-medium">Refresh Token:</p>
-              <p className="p-2 overflow-x-auto text-xs bg-gray-100 rounded whitespace-nowrap">
+              <Snippet className="p-2 overflow-x-auto text-xs bg-gray-100 rounded whitespace-nowrap">
                 {refreshToken}
-              </p>
+              </Snippet>
             </div>
           </div>
         </div>

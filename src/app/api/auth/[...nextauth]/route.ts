@@ -1,3 +1,4 @@
+import { user } from "@heroui/theme";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
@@ -5,6 +6,7 @@ import GoogleProvider from "next-auth/providers/google";
 declare module "next-auth" {
   interface Session {
     user: {
+      name: string;
       email: string;
       accessToken: string;
       refreshToken: string;
@@ -52,7 +54,11 @@ const handler = NextAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
       authorization: {
         params: {
-          redirect_uri: `${process.env.NEXT_PUBLIC_BASE_URL}/auth/google`,
+          prompt: "consent",
+          access_type: "offline",
+          response_type: "code",
+          scope: "openid email profile",
+          redirect_uri: `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/callback/google`,
         },
       },
     }),
@@ -61,18 +67,26 @@ const handler = NextAuth({
     signIn: "/login",
   },
   callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
-        token.email = user.email;
-        token.accessToken = user.accessToken;
-        token.refreshToken = user.refreshToken;
+    async jwt({ token, user, account }) {
+      if (account && user) {
+        if (account.provider === "google") {
+          token.accessToken = account.access_token as string;
+          token.refreshToken = account.refresh_token as string;
+          token.email = user.email;
+        }
+        if (account.provider === "credentials") {
+          token.accessToken = (user as any).accessToken;
+          token.refreshToken = (user as any).refreshToken;
+          token.email = user.email;
+        }
       }
 
       return token;
     },
     async session({ session, token }) {
       if (token && session.user) {
-        session.user.email = token.email as string;
+        session.user.email = token.email;
+        session.user.name = token.name as string;
         session.user.accessToken = token.accessToken as string;
         session.user.refreshToken = token.refreshToken as string;
       }
