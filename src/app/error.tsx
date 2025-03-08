@@ -1,7 +1,5 @@
 "use client";
 
-import { useEffect } from "react";
-
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/public/icon/logo";
 
@@ -12,9 +10,6 @@ export default function Error({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
-  useEffect(() => {
-    console.error(error);
-  }, [error]);
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-50">

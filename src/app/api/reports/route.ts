@@ -25,8 +25,6 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(response.data);
   } catch (error) {
-    console.error("API error:", error);
-
     let errorMessage = "Failed to submit report. Please try again.";
     let statusCode = 500;
 

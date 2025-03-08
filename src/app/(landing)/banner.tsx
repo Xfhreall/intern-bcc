@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Send } from "lucide-react";
 
 export const Banner = () => {
   return (

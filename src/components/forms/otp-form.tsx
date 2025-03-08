@@ -3,6 +3,7 @@ import type React from "react";
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { ArrowLeft } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { GoogleIcon } from "@/public/icon/googleIcon";
@@ -13,7 +14,6 @@ import {
 } from "@/components/ui/input-otp";
 import { useOtp } from "@/hooks/useOtp";
 import { Logo } from "@/public/icon/logo";
-import { ArrowLeft } from "lucide-react";
 
 const OtpForm = () => {
   const router = useRouter();

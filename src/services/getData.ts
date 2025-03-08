@@ -13,7 +13,5 @@ export const fetchData = async (): Promise<RepoData> => {
     "https://api.github.com/repos/TanStack/query"
   );
 
-  console.log(res.data);
-
   return res.data;
 };

@@ -4,7 +4,7 @@ import { getServerSession } from "next-auth";
 
 import { api } from "@/lib/axios";
 
-export async function GET(req: Request) {
+export async function GET() {
   const session = await getServerSession();
 
   if (!session || !session.accessToken) {
