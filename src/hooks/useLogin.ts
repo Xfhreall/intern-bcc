@@ -152,7 +152,6 @@ export function useLogin() {
 
         setRegistrationData({
           email: credentials.email,
-          password: credentials.password,
         });
 
         const data = response.data;

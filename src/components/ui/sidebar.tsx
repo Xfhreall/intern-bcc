@@ -169,35 +169,26 @@ export const MobileSidebar = ({
 
 export const SidebarLink = ({
   link,
-  className,
-  ...props
+  isActive,
 }: {
   link: Links;
   className?: string;
   props?: LinkProps;
+  isActive?: boolean;
 }) => {
-  const { open, animate } = useSidebar();
 
   return (
     <Link
       className={cn(
-        "flex items-center justify-start gap-2  group/sidebar py-2",
-        className
+        "flex items-center gap-2 px-1 py-2 rounded-md transition-colors",
+        isActive ? "bg-primary text-white font-medium" : "hover:bg-gray-100 text-gray-700",
       )}
       href={link.href}
-      {...props}
     >
-      {link.icon}
-
-      <motion.span
-        animate={{
-          display: animate ? (open ? "inline-block" : "none") : "inline-block",
-          opacity: animate ? (open ? 1 : 0) : 1,
-        }}
-        className="text-xs font-semibold group-hover/sidebar:translate-x-1 transition duration-150 whitespace-pre inline-block !p-0 !m-0"
-      >
-        {link.label}
-      </motion.span>
+      {React.cloneElement(link.icon as React.ReactElement, {
+        className: cn("flex-shrink-0 w-5 h-5", isActive ? "fill-white" : "fill-gray-700"),
+      })}
+      <span className="overflow-hidden text-sm whitespace-nowrap">{link.label}</span>
     </Link>
   );
 };
