@@ -10,7 +10,7 @@ export default function SeaReportPage() {
     const [activeTab, setActiveTab] = useState("SeaReport")
 
     return (
-        <div className="w-full h-full p-8">
+        <div className="w-full h-full px-8 py-4">
             <HeaderDashboard activeTab={activeTab} setActiveTab={setActiveTab} />
             {activeTab === "SeaReport" ? <SeaReportForm /> : <SeaStatus />}
         </div >

@@ -1,7 +1,9 @@
 export interface Reports {
   id: string;
   title: string;
-  location: string;
+  street: string;
+  province: string;
+  country: string;
   description: string;
   media?: string;
   status: string;

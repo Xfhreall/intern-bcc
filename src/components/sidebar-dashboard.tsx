@@ -1,10 +1,9 @@
 "use client";
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { LogOut } from 'lucide-react';
 import { usePathname } from "next/navigation";
 
-import { Sidebar, SidebarBody, SidebarLink } from "./ui/sidebar";
+import { Sidebar, SidebarBody, SidebarButton, SidebarLink } from "./ui/sidebar";
 
 import {
   NewsIcon,
@@ -13,6 +12,7 @@ import {
   DonationIcon,
 } from "@/public/icon/sidebarIcon";
 import { LogoBlack } from "@/public/icon/logo";
+
 
 
 export function SidebarDashboard() {
@@ -63,15 +63,7 @@ export function SidebarDashboard() {
             ))}
           </div>
         </div>
-        <div>
-          <SidebarLink
-            link={{
-              label: "Logout",
-              href: "/dashboard",
-              icon: <LogOut className="p-1 text-white bg-red-500 rounded-md" />,
-            }}
-          />
-        </div>
+        <SidebarButton />
       </SidebarBody>
     </Sidebar>
   );

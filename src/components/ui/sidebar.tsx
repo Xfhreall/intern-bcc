@@ -3,10 +3,12 @@ import Link, { LinkProps } from "next/link";
 import React, { useState, createContext, useContext } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { IconMenu2, IconX } from "@tabler/icons-react";
+import { LogOut } from "lucide-react";
 
 import { Button } from "./button";
 
 import { cn } from "@/lib/utils";
+import { useLogout } from "@/hooks/useLogout";
 
 interface Links {
   label: string;
@@ -177,6 +179,7 @@ export const SidebarLink = ({
   isActive?: boolean;
 }) => {
 
+
   return (
     <Link
       className={cn(
@@ -193,34 +196,33 @@ export const SidebarLink = ({
   );
 };
 export const SidebarButton = ({
-  link,
   className,
   ...props
 }: {
-  link: Links;
   className?: string;
   props?: LinkProps;
 }) => {
   const { open, animate } = useSidebar();
+  const logout = useLogout();
 
   return (
     <Button
       className={cn(
-        "flex items-center justify-start gap-2  group/sidebar py-2",
+        "flex items-center gap-2 px-2 py-2 rounded-md justify-start transition-colors bg-red-500 hover:bg-red-600",
         className
       )}
+      onClick={() => logout.mutate()}
       {...props}
     >
-      {link.icon}
-
+      <LogOut className="flex-shrink-0 w-5 h-5 " />
       <motion.span
         animate={{
           display: animate ? (open ? "inline-block" : "none") : "inline-block",
           opacity: animate ? (open ? 1 : 0) : 1,
         }}
-        className="text-xs font-semibold group-hover/sidebar:translate-x-1 transition duration-150 whitespace-pre inline-block !p-0 !m-0"
+        className="overflow-hidden text-sm whitespace-nowrap"
       >
-        {link.label}
+        Log Out
       </motion.span>
     </Button>
   );

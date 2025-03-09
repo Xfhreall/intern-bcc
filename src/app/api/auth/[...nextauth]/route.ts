@@ -1,6 +1,10 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
+import { NextAuthOptions } from "next-auth";
+import axios from "axios";
+
+import { api } from "@/lib/axios";
 
 declare module "next-auth" {
   interface Session {
@@ -20,7 +24,7 @@ declare module "next-auth/jwt" {
   }
 }
 
-const handler = NextAuth({
+export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -34,16 +38,34 @@ const handler = NextAuth({
         }
 
         try {
+          const response = await api.post(
+            `/auth/login`,
+            {
+              email: credentials.email,
+              password: credentials.password,
+            },
+            {
+              headers: { "Content-Type": "application/json" },
+            }
+          );
+
+          const data = response.data;
+
           const user = {
             id: "user-id",
             email: credentials.email,
             name: credentials.email.split("@")[0],
-            accessToken: "dummy-access-token",
-            refreshToken: "dummy-refresh-token",
+            accessToken: data.accessToken,
+            refreshToken: data.refreshToken,
           };
 
           return user;
         } catch (error) {
+          if (axios.isAxiosError(error) && error.response) {
+            throw new Error(
+              error.response.data.message || "Authentication failed"
+            );
+          }
           throw error;
         }
       },
@@ -74,8 +96,8 @@ const handler = NextAuth({
           token.email = user.email;
         }
         if (account.provider === "credentials") {
-          token.accessToken = (user as any).accessToken;
-          token.refreshToken = (user as any).refreshToken;
+          token.accessToken = user.accessToken;
+          token.refreshToken = user.refreshToken;
           token.email = user.email;
         }
       }
@@ -95,8 +117,10 @@ const handler = NextAuth({
   },
   session: {
     strategy: "jwt",
-    maxAge: 7 * 24 * 60 * 60, // 1 minggu
+    maxAge: 7 * 24 * 60 * 60, // 1 week
   },
-});
+};
 
-export { handler as GET, handler as POST };
+const handler = NextAuth(authOptions);
+
+export { handler as GET, handler as POST, handler as DELETE, handler as PUT };

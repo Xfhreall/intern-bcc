@@ -11,6 +11,7 @@ import { addToast } from "@heroui/toast";
 
 import { useAuthStore } from "@/store/authStore";
 import { VerifyOtpResponse } from "@/types/authTypes";
+import { internalApi } from "@/lib/axios";
 
 export const useOtp = () => {
   const router = useRouter();
@@ -30,8 +31,8 @@ export const useOtp = () => {
       }
 
       try {
-        const response = await axios.post<VerifyOtpResponse>(
-          "/api/auth/verify-otp",
+        const response = await internalApi.post<VerifyOtpResponse>(
+          "/auth/verify-otp",
           {
             email: registrationData.email,
             otp: otpValue,

@@ -53,6 +53,12 @@ export const getAccessToken = () => {
   return tokenFromStore;
 };
 
+export const getCredentialsData = () => {
+  const email = useAuthStore.getState().registrationData?.email;
+
+  return email;
+};
+
 export const getRefreshToken = () => {
   const tokenFromStore = useAuthStore.getState().tokens?.refreshToken;
 

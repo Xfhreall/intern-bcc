@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    await api.post(`/auth/reset-password?resetToken=${token}`, {
+    await api.post(`/auth/reset-password/${token}`, {
       password,
     });
 

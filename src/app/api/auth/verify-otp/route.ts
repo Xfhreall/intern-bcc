@@ -3,9 +3,9 @@ import axios from "axios";
 
 import { api } from "@/lib/axios";
 
-export async function POST(request: NextRequest) {
+export async function POST(req: NextRequest) {
   try {
-    const body = await request.json();
+    const body = await req.json();
 
     if (!body.email || !body.otp) {
       return NextResponse.json(

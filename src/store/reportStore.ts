@@ -8,7 +8,7 @@ interface UserReportsState {
   setReports: (reports: any[]) => void;
 }
 
-export const useUserReportsStore = create<UserReportsState>((set) => ({
+export const useReportsStore = create<UserReportsState>((set) => ({
   reports: [],
   setReports: (reports) => set({ reports }),
 }));

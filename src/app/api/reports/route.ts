@@ -1,38 +1,70 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
-import axios from "axios";
+
+import { authOptions } from "../auth/[...nextauth]/route";
 
 import { api } from "@/lib/axios";
+import axios from "axios";
 
-export async function POST(req: NextRequest) {
+export async function POST(request: NextRequest) {
   try {
-    const session = await getServerSession();
+    const session = await getServerSession(authOptions);
 
-    if (!session || !session.user) {
-      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    const token = session?.user.accessToken;
+
+    if (!token) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
-
-    const formData = await req.formData();
-
-    const accessToken = localStorage.getItem("accessToken");
+    const formData = await request.formData();
 
     const response = await api.post("/reports", formData, {
       headers: {
-        Authorization: `Bearer ${accessToken}`,
+        Authorization: `Bearer ${token}`,
         "Content-Type": "multipart/form-data",
       },
     });
 
     return NextResponse.json(response.data);
-  } catch (error) {
-    let errorMessage = "Failed to submit report. Please try again.";
-    let statusCode = 500;
+  } catch (error: any) {
+    return NextResponse.json(
+      {
+        error: "Failed to submit report",
+        details: error.message,
+      },
+      { status: 500 }
+    );
+  }
+}
 
-    if (axios.isAxiosError(error) && error.response) {
-      errorMessage = error.response.data?.message || errorMessage;
-      statusCode = error.response.status;
+export async function GET() {
+  const session = await getServerSession(authOptions);
+  const token = session?.user.accessToken;
+
+  if (!session || !session.user.accessToken) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  try {
+    const { data } = await api.get("/reports", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return NextResponse.json(data);
+  } catch (error: any) {
+    if (axios.isAxiosError(error)) {
+      return NextResponse.json(
+        error.response?.data || { message: "Fetching data failed" },
+        {
+          status: error.response?.status || 500,
+        }
+      );
     }
 
-    return NextResponse.json({ message: errorMessage }, { status: statusCode });
+    return NextResponse.json(
+      { message: "Fetching data failed" },
+      { status: 500 }
+    );
   }
 }
