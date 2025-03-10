@@ -65,7 +65,7 @@ export async function GET(request: NextRequest) {
     const appTokens = await generateTokens(user);
     const redirectUrl = new URL(
       "/api/auth/callback/google",
-      process.env.NEXTAUTH_URL
+      process.env.GOOGLE_CALLBACK_URL
     );
 
     redirectUrl.searchParams.append("access_token", appTokens.accessToken);

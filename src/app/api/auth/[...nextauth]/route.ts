@@ -98,17 +98,14 @@ export const authOptions: NextAuthOptions = {
     async signIn({ account, profile }) {
       if (account?.provider === "google" && profile?.email) {
         try {
-          const response = await axios.get(
-            `https://be-intern.bccdev.id/nabil/api/v1/auth/google/callback`,
-            {
-              params: {
-                code: account.code,
-                scope: account.scope,
-                authuser: 0,
-                prompt: "consent",
-              },
-            }
-          );
+          const response = await api.get(`/auth/google`, {
+            params: {
+              code: account.code,
+              scope: account.scope,
+              authuser: 0,
+              prompt: "consent",
+            },
+          });
 
           if (response.data.accessToken && response.data.refreshToken) {
             account.backendAccessToken = response.data.accessToken;
@@ -191,6 +188,5 @@ export const authOptions: NextAuthOptions = {
   debug: process.env.NODE_ENV === "development",
 };
 
-const handler = NextAuth(authOptions);
-
-export { handler as GET, handler as POST, handler as DELETE, handler as PUT };
+export const GET = NextAuth(authOptions);
+export const POST = NextAuth(authOptions);

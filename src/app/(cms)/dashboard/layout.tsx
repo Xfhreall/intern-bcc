@@ -22,7 +22,7 @@ export default function RootLayout({
 }) {
   return (
     <SidebarProvider>
-      <div className="flex min-h-screen">
+      <div className="relative flex w-screen min-h-screen">
         <SidebarDashboard />
         {children}
       </div>

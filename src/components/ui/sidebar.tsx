@@ -125,47 +125,40 @@ export const MobileSidebar = ({
   const { open, setOpen } = useSidebar();
 
   return (
-    <>
-      <div
-        className={cn(
-          "h-10 px-4 py-4 flex flex-row md:hidden  items-center justify-between bg-neutral-100 dark:bg-neutral-800 w-full"
-        )}
-        {...props}
-      >
-        <button className="z-20 flex justify-end w-full">
-          <IconMenu2
-            className="text-neutral-800 dark:text-neutral-200"
-            onClick={() => setOpen(!open)}
-          />
-        </button>
-        <AnimatePresence>
-          {open && (
-            <motion.div
-              animate={{ x: 0, opacity: 1 }}
-              className={cn(
-                "fixed h-full w-full inset-0 bg-white dark:bg-neutral-900 p-10 z-[100] flex flex-col justify-between",
-                className
-              )}
-              exit={{ x: "-100%", opacity: 0 }}
-              initial={{ x: "-100%", opacity: 0 }}
-              transition={{
-                duration: 0.3,
-                ease: "easeInOut",
-              }}
+    <div className="fixed left-0 block top-10 md:hidden">
+      <button className="z-20 flex justify-end w-full">
+        <IconMenu2
+          className="text-neutral-800 dark:text-neutral-200"
+          onClick={() => setOpen(!open)}
+        />
+      </button>
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            animate={{ x: 0, opacity: 1 }}
+            className={cn(
+              "fixed h-full w-full inset-0 bg-white p-10 z-[100] flex flex-col justify-between",
+              className
+            )}
+            exit={{ x: "-100%", opacity: 0 }}
+            initial={{ x: "-100%", opacity: 0 }}
+            transition={{
+              duration: 0.3,
+              ease: "easeInOut",
+            }}
+          >
+            <button
+              aria-label="Close sidebar"
+              className="absolute z-50 right-10 top-10 text-neutral-800 dark:text-neutral-200"
+              onClick={() => setOpen(!open)}
             >
-              <button
-                aria-label="Close sidebar"
-                className="absolute z-50 right-10 top-10 text-neutral-800 dark:text-neutral-200"
-                onClick={() => setOpen(!open)}
-              >
-                <IconX />
-              </button>
-              {children}
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-    </>
+              <IconX />
+            </button>
+            {children}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 };
 

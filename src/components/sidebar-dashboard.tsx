@@ -50,7 +50,7 @@ export function SidebarDashboard() {
 
   return (
     <Sidebar open={open} setOpen={setOpen}>
-      <SidebarBody className="sticky top-0 justify-between min-h-screen gap-10 bg-white shadow-xl">
+      <SidebarBody className="sticky bottom-0 left-0 justify-between min-h-screen gap-10 bg-white shadow-xl">
         <div className="flex flex-col flex-1 overflow-x-hidden overflow-y-auto">
           {open ? <Logo /> : <LogoIcon />}
           <div className="flex flex-col gap-2 mt-8">
@@ -66,6 +66,7 @@ export function SidebarDashboard() {
         <SidebarButton />
       </SidebarBody>
     </Sidebar>
+
   );
 }
 export const Logo = () => {
