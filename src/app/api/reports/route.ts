@@ -1,10 +1,10 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
+import axios from "axios";
 
 import { authOptions } from "../auth/[...nextauth]/route";
 
 import { api } from "@/lib/axios";
-import axios from "axios";
 
 export async function POST(request: NextRequest) {
   try {
