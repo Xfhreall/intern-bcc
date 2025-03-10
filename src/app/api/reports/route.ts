@@ -2,8 +2,7 @@ import { type NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import axios from "axios";
 
-import { authOptions } from "../auth/[...nextauth]/route";
-
+import { authOptions } from "@/lib/authOptions";
 import { api } from "@/lib/axios";
 
 export async function POST(request: NextRequest) {
