@@ -2,7 +2,7 @@
 import { Bell } from "lucide-react"
 import { useSession } from "next-auth/react"
 
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 export function HeaderDashboard({
     activeTab,
@@ -46,10 +46,11 @@ export function HeaderDashboard({
                     </button>
                     <div className="flex items-center space-x-4">
                         <div className="text-sm">
-                            <p className="font-semibold text-gray-900">{session?.user?.email?.split("@")[0]}</p>
+                            <p className="font-semibold text-gray-900">{session?.user?.name}</p>
                             <p className="text-xs text-gray-500 text-end">Volunteer</p>
                         </div>
                         <Avatar className="w-8 h-8">
+                            <AvatarImage src={session?.user.picture} />
                             <AvatarFallback className="text-white bg-primary">
                                 {session?.user?.email?.[0]?.toUpperCase()}
                             </AvatarFallback>

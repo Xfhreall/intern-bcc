@@ -51,12 +51,11 @@ export function useLoginForm() {
           credentials
         );
 
+        const data = response.data;
+
         setRegistrationData({
           email: credentials.email,
-          password: credentials.password,
         });
-
-        const data = response.data;
 
         if (data.accessToken) {
           localStorage.setItem("accessToken", data.accessToken);

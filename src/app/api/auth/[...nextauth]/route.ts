@@ -1,7 +1,8 @@
+import type { NextAuthOptions, Profile } from "next-auth";
+
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
-import { NextAuthOptions } from "next-auth";
 import axios from "axios";
 
 import { api } from "@/lib/axios";
@@ -11,6 +12,7 @@ declare module "next-auth" {
     user: {
       name: string;
       email: string;
+      picture?: string;
       accessToken: string;
       refreshToken: string;
     };
@@ -19,6 +21,9 @@ declare module "next-auth" {
 
 declare module "next-auth/jwt" {
   interface JWT {
+    name: string;
+    email: string;
+    picture?: string;
     accessToken: string;
     refreshToken: string;
   }
@@ -55,6 +60,7 @@ export const authOptions: NextAuthOptions = {
             id: "user-id",
             email: credentials.email,
             name: credentials.email.split("@")[0],
+            picture: "",
             accessToken: data.accessToken,
             refreshToken: data.refreshToken,
           };
@@ -78,47 +84,111 @@ export const authOptions: NextAuthOptions = {
           prompt: "consent",
           access_type: "offline",
           response_type: "code",
-          scope: "openid email profile",
-          redirect_uri: `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/callback/google`,
+          scope:
+            "email profile openid https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email",
         },
       },
     }),
   ],
   pages: {
     signIn: "/login",
+    error: "/login",
   },
   callbacks: {
-    async jwt({ token, user, account }) {
-      if (account && user) {
-        if (account.provider === "google") {
+    async signIn({ account, profile }) {
+      if (account?.provider === "google" && profile?.email) {
+        try {
+          const response = await axios.get(
+            `https://be-intern.bccdev.id/nabil/api/v1/auth/google/callback`,
+            {
+              params: {
+                code: account.code,
+                scope: account.scope,
+                authuser: 0,
+                prompt: "consent",
+              },
+            }
+          );
+
+          if (response.data.accessToken && response.data.refreshToken) {
+            account.backendAccessToken = response.data.accessToken;
+            account.backendRefreshToken = response.data.refreshToken;
+          }
+
+          return true;
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        } catch (error) {
+          return true;
+        }
+      }
+
+      return true;
+    },
+    async jwt({
+      token,
+      user,
+      account,
+      profile,
+    }: {
+      token: any;
+      user?: any;
+      account?: any;
+      profile?: Profile;
+    }) {
+      if (account?.provider === "credentials" && user) {
+        token.email = user.email;
+        token.name = user.name || "";
+        token.picture = (user as any).picture || "";
+        token.accessToken = user.accessToken;
+        token.refreshToken = user.refreshToken;
+      }
+      if (account?.provider === "google" && profile) {
+        if (account.backendAccessToken && account.backendRefreshToken) {
+          token.accessToken = account.backendAccessToken as string;
+          token.refreshToken = account.backendRefreshToken as string;
+        } else {
           token.accessToken = account.access_token as string;
-          token.refreshToken = account.refresh_token as string;
-          token.email = user.email;
+          token.refreshToken = (account.refresh_token as string) || "";
         }
-        if (account.provider === "credentials") {
-          token.accessToken = user.accessToken;
-          token.refreshToken = user.refreshToken;
-          token.email = user.email;
-        }
+
+        token.email = profile.email || "";
+        token.name = profile.name || "";
+        token.picture = profile.image;
       }
 
       return token;
     },
     async session({ session, token }) {
       if (token && session.user) {
-        session.user.email = token.email;
+        session.user.email = token.email as string;
         session.user.name = token.name as string;
+        session.user.picture = token.picture as string;
         session.user.accessToken = token.accessToken as string;
         session.user.refreshToken = token.refreshToken as string;
       }
 
       return session;
     },
+    async redirect({ url, baseUrl }) {
+      if (url.startsWith(baseUrl)) {
+        const urlObj = new URL(url);
+        const callbackUrl = urlObj.searchParams.get("callbackUrl");
+
+        if (callbackUrl) {
+          return callbackUrl;
+        }
+
+        return `${baseUrl}/dashboard`;
+      }
+
+      return `${baseUrl}/dashboard`;
+    },
   },
   session: {
     strategy: "jwt",
-    maxAge: 7 * 24 * 60 * 60, // 1 week
+    maxAge: 7 * 24 * 60 * 60,
   },
+  debug: process.env.NODE_ENV === "development",
 };
 
 const handler = NextAuth(authOptions);

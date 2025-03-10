@@ -12,18 +12,25 @@ export default function DashboardPage() {
   const router = useRouter();
   const [accessToken, setAccessToken] = useState("");
   const [refreshToken, setRefreshToken] = useState("");
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
     if (status === "unauthenticated") {
       router.push("/login");
     }
-    if (typeof window !== "undefined") {
-      setAccessToken(localStorage.getItem("accessToken") || "");
-      setRefreshToken(localStorage.getItem("refreshToken") || "");
-    }
+
+    const timeout = setTimeout(() => {
+      setIsReady(true);
+      if (typeof window !== "undefined") {
+        setAccessToken(localStorage.getItem("accessToken") || "");
+        setRefreshToken(localStorage.getItem("refreshToken") || "");
+      }
+    }, 2000);
+
+    return () => clearTimeout(timeout);
   }, [status, router]);
 
-  if (status === "loading") {
+  if (!isReady || status === "loading") {
     return (
       <div className="flex items-center justify-center h-screen w-svw">
         Loading...
@@ -44,7 +51,7 @@ export default function DashboardPage() {
 
       <div className="w-full p-6 bg-white rounded-lg">
         <h2 className="mb-4 text-xl font-semibold">
-          Welcome, {session?.user.name}!
+          Welcome, {session?.user?.name}!
         </h2>
         <p className="text-gray-600">You are now logged in to your account.</p>
 

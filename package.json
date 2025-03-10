@@ -47,6 +47,7 @@
   "clsx": "^2.1.1",
   "date-fns": "^4.1.0",
   "framer-motion": "^12.4.10",
+  "google-auth-library": "^9.15.1",
   "input-otp": "^1.4.2",
   "intl-messageformat": "^10.5.0",
   "lucide-react": "^0.475.0",
