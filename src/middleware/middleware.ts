@@ -16,6 +16,19 @@ export async function middleware(request: NextRequest) {
   const isProtectedRoute = pathname.startsWith("/dashboard");
   const isAuthRoute = pathname === "/login" || pathname === "/register";
 
+  if (pathname.startsWith("/api/v1/auth/google/callback")) {
+    // Mendapatkan URL baru
+    const url = request.nextUrl.clone();
+
+    // Mengubah path ke handler callback kita
+    url.pathname = "/auth/callback";
+
+    // Mempertahankan query parameters (penting untuk parameter code)
+    // URL query sudah otomatis dipertahankan dalam NextResponse.redirect
+
+    return NextResponse.redirect(url);
+  }
+
   if (!isAuthenticated && isProtectedRoute) {
     const loginUrl = new URL("/login", request.url);
 
@@ -40,5 +53,11 @@ export async function middleware(request: NextRequest) {
   return NextResponse.next();
 }
 export const config = {
-  matcher: ["/dashboard/:path*", "/login", "/register", "/register/:path*"],
+  matcher: [
+    "/dashboard/:path*",
+    "/login",
+    "/register",
+    "/register/:path*",
+    "/api/v1/auth/google/callback",
+  ],
 };

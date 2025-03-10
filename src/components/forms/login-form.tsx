@@ -233,13 +233,14 @@ export function LoginForm() {
   const handleGoogleLogin = async () => {
     try {
       setGoogleLoading(true);
+      window.location.href = 'https://be-intern.bccdev.id/nabil/api/v1/auth/google';
 
-      const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
+      // const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
 
-      await signIn("google", {
-        callbackUrl,
-        redirect: true
-      });
+      // await signIn("google", {
+      //   callbackUrl,
+      //   redirect: true
+      // });
     } catch (error) {
       return error
     } finally {
