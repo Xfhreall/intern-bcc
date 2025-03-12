@@ -15,7 +15,7 @@ export const News = () => {
             </h3>
             <Link
               className="flex items-center text-xs font-medium sm:text-base hover:underline text-primary hover:brightness-75"
-              href="/news-page"
+              href="/news"
             >
               {"Explore news >"}
             </Link>
