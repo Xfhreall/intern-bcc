@@ -4,6 +4,8 @@ import { newsItems } from "@/lib/newsDatas";
 import NewsCard from "@/components/ui/news-card";
 
 export const News = () => {
+  const displayedNewsItems = newsItems.slice(0, 3);
+
   return (
     <section className="px-4 py-12 sm:px-6 lg:px-10" id="news">
       <div className="mx-auto max-w-7xl">
@@ -22,7 +24,7 @@ export const News = () => {
           </div>
         </div>
         <div className="w-full overflow-x-scroll">
-          <NewsCard data={newsItems} />
+          <NewsCard data={displayedNewsItems} />
         </div>
       </div>
     </section>

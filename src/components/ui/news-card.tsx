@@ -8,11 +8,10 @@ import { NewsProps } from "@/lib/newsDatas";
 
 const NewsCard = ({ data }: { data: NewsProps[] }) => {
   const [loading, setLoading] = useState(true);
-  const displayedData = data.slice(0, 3);
 
   return (
     <div className="flex gap-6 pb-4 overflow-x-auto flex-nowrap md:grid md:grid-cols-2 md:overflow-visible lg:grid-cols-3">
-      {displayedData.map((item, index) => {
+      {data.map((item, index) => {
         return (
           <article
             key={index}
