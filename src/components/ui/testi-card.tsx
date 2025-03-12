@@ -15,20 +15,20 @@ export function TestimonialCard({
   avatarUrl,
 }: TestimonialCardProps) {
   return (
-    <div className="w-[520px] py-10 px-14 bg-white rounded-xl border shadow-xl mx-4 grid">
-      <p className="text-gray-600 mb-6 min-h-[80px]">{text}</p>
+    <div className="w-[320px] h-[169px] sm:w-[520px] sm:h-full py-8 sm:py-10 px-5 sm:px-14 bg-white rounded-xl border shadow-xl mx-4 grid">
+      <p className="text-gray-600 mb-3 sm:mb-6 h-full sm:min-h-[80px] text-xs sm:text-base">{text}</p>
 
       <div className="flex items-center gap-3">
         <Image
           alt={author}
-          className="object-cover w-10 h-10 rounded-full"
+          className="object-cover rounded-full size-6 sm:size-10"
           height={40}
           src={avatarUrl?.src || ""}
           width={40}
         />
         <div>
-          <p className="font-semibold">{author}</p>
-          <p className="text-sm text-gray-500">{role}</p>
+          <p className="text-xs font-semibold sm:text-base">{author}</p>
+          <p className="text-xs text-gray-500 sm:text-sm">{role}</p>
         </div>
       </div>
     </div>

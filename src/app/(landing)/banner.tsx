@@ -6,10 +6,10 @@ export const Banner = () => {
       <div className="px-4 py-8 text-white bg-primary md:py-12 md:px-8 lg:px-16">
         <div className="flex flex-col items-start justify-between gap-6 mx-auto max-w-7xl md:flex-row md:items-center">
           <div className="max-w-2xl py-6 space-y-4">
-            <h1 className="text-xl font-bold md:text-2xl lg:text-3xl">
+            <h1 className="text-2xl font-semibold sm:font-bold md:text-3xl">
               Join Us as a Community Partner!
             </h1>
-            <p className="text-sm md:text-base">
+            <p className="text-xs font-light md:text-base">
               Feel free to reach out to us on Instagram for any inquiries or
               collaborations!
             </p>

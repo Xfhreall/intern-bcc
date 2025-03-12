@@ -14,13 +14,13 @@ export function FeatureCard({
   description,
 }: FeatureCardProps) {
   return (
-    <Card className="flex flex-col shadow-lg h-[302px]">
-      <CardHeader>
-        <Icon classname="w-10 h-10" />
+    <Card className="flex flex-col justify-center py-8 shadow-lg aspect-square sm:py-0 hover:shadow-xl duration-250">
+      <CardHeader className="py-2 sm:py-6">
+        <Icon classname="size-6 sm:size-10" />
       </CardHeader>
       <CardContent className="flex-grow space-y-4">
-        <h4 className="text-lg font-bold line-clamp-2">{title}</h4>
-        <p className="font-light text-md">{description}</p>
+        <h4 className="text-sm font-bold sm:text-lg line-clamp-2">{title}</h4>
+        <p className="hidden font-light text-md sm:block">{description}</p>
       </CardContent>
     </Card>
   );

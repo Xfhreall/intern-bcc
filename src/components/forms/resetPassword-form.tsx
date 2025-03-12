@@ -19,7 +19,7 @@ import { Logo } from "@/public/icon/logo";
 const ResetPasswordForm = () => {
     const params = useParams();
     const resetToken = params.resetToken as string;
-    const { form, onSubmit } = useResetPassword(resetToken);
+    const { form, onSubmit, isSubmitting } = useResetPassword(resetToken);
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -111,7 +111,7 @@ const ResetPasswordForm = () => {
                             className="w-full h-12 bg-primary hover:bg-primary/90"
                             type="submit"
                         >
-                            Change Password
+                            {isSubmitting ? "Loading..." : "Change Password"}
                         </Button>
                     </form>
                 </Form>

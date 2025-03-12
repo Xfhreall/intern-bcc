@@ -38,6 +38,7 @@ export const useForgot = () => {
           color: "success",
           variant: "flat",
           title: "Request Success",
+          description: "Check your email now",
           timeout: 3000,
         });
 

@@ -46,8 +46,8 @@ export const Testimoni = () => {
   return (
     <section className="py-16 overflow-hidden" id="testimoni">
       <div className="mx-auto mb-12 space-y-4 text-center">
-        <h2 className="mb-2 text-2xl font-semibold">Testimonial</h2>
-        <h3 className="text-4xl font-bold text-gray-900">
+        <h2 className="mb-2 text-sm font-semibold sm:text-2xl">Testimonial</h2>
+        <h3 className="text-2xl font-bold text-gray-900 sm:text-4xl">
           What They Say About Us
         </h3>
       </div>

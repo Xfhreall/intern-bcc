@@ -5,17 +5,17 @@ import { api } from "@/lib/axios";
 
 export async function POST(request: NextRequest) {
   try {
-    const { token, password } = await request.json();
+    const { resetToken, newPassword } = await request.json();
 
-    if (!token || !password) {
+    if (!resetToken || !newPassword) {
       return NextResponse.json(
-        { message: "Token and password are required" },
+        { message: "Use another password" },
         { status: 400 }
       );
     }
 
-    await api.post(`/auth/reset-password/${token}`, {
-      password,
+    await api.post(`/auth/reset-password/${resetToken}`, {
+      newPassword,
     });
 
     return NextResponse.json({

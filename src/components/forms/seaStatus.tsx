@@ -2,7 +2,7 @@
 
 import type { Reports } from "@/types/reportTypes"
 
-import React, { useState, useMemo, useCallback } from "react"
+import React, { useState, useMemo, useCallback, useEffect } from "react"
 import { format } from "date-fns"
 import { RefreshCw, Search } from "lucide-react"
 import { addToast } from "@heroui/toast"
@@ -40,9 +40,7 @@ const StatusBadge = React.memo(({ status }: { status: string }) => {
     }
 
     return (
-        <span className={`py-2 text-sm rounded-md inline-block w-28 text-center ${getStatusColor(status)}`}>
-            {status}
-        </span>
+        <span className={`py-2 text-sm rounded-md inline-block w-28 text-center ${getStatusColor(status)}`}>{status}</span>
     )
 })
 
@@ -134,7 +132,7 @@ const UserReports = () => {
             },
             {
                 accessorKey: "status",
-                header: () => <div className="text-right">Status</div>,
+                header: () => <div className="mr-6 text-right">Status</div>,
                 cell: ({ row }) => {
                     return (
                         <div className="text-right">
@@ -181,6 +179,13 @@ const UserReports = () => {
         enableMultiSort: false,
         enableColumnFilters: true,
         enableGlobalFilter: true,
+        initialState: {
+            pagination: {
+                pageSize: 10,
+                pageIndex: 0,
+            },
+        },
+        pageCount: Math.ceil(reports.length / 10),
     })
 
     const handleNameFilterChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -216,6 +221,21 @@ const UserReports = () => {
         }
     }, [refetch, error])
 
+    useEffect(() => {
+        const currentTopItemIndex = table.getState().pagination.pageIndex * table.getState().pagination.pageSize
+        const newPageIndex = Math.floor(currentTopItemIndex / table.getState().pagination.pageSize)
+
+        if (newPageIndex !== table.getState().pagination.pageIndex) {
+            table.setPageIndex(newPageIndex)
+        }
+    }, [
+        table.getState().pagination.pageSize,
+        table.getState().pagination.pageIndex,
+        table.getState().pagination.pageSize,
+    ])
+
+    const rows = table.getRowModel().rows
+
     if (isLoading) {
         return (
             <div className="w-full p-6 bg-white rounded-lg shadow">
@@ -235,7 +255,6 @@ const UserReports = () => {
         )
     }
 
-    const rows = table.getRowModel().rows
 
     return (
         <div className="w-full p-6 my-6 bg-white rounded-lg shadow">
@@ -263,12 +282,12 @@ const UserReports = () => {
                     <SelectTrigger className="w-[180px]">
                         <SelectValue placeholder="Status" />
                     </SelectTrigger>
-                    <SelectContent>
-                        <SelectItem value="all">All Status</SelectItem>
-                        <SelectItem value="invalid">Invalid</SelectItem>
-                        <SelectItem value="waiting">Waiting</SelectItem>
-                        <SelectItem value="verified">Verified</SelectItem>
-                        <SelectItem value="resolved">Resolved</SelectItem>
+                    <SelectContent className="font-medium text-white">
+                        <SelectItem className="text-black bg-gray-100" value="all">All Status</SelectItem>
+                        <SelectItem className="my-1 bg-red-500 focus:bg-red-700 focus:text-inherit text-inherit" value="invalid">Invalid</SelectItem>
+                        <SelectItem className="my-1 bg-yellow-400 focus:bg-yellow-700 focus:text-inherit text-inherit" value="waiting">Waiting</SelectItem>
+                        <SelectItem className="my-1 bg-green-500 focus:bg-green-700 focus:text-inherit text-inherit" value="verified">Verified</SelectItem>
+                        <SelectItem className="my-1 bg-blue-500 focus:bg-blue-700 focus:text-inherit text-inherit" value="resolved">Resolved</SelectItem>
                     </SelectContent>
                 </Select>
 
@@ -278,50 +297,141 @@ const UserReports = () => {
             </div>
 
             {reports.length > 0 ? (
-                <div className="border rounded-md">
-                    <div className="w-full overflow-x-auto">
-                        <Table className="min-w-full">
-                            <TableHeader>
-                                {table.getHeaderGroups().map((headerGroup) => (
-                                    <TableRow key={headerGroup.id}>
-                                        {headerGroup.headers.map((header) => (
-                                            <TableHead
-                                                key={header.id}
-                                                className={header.id.includes("status") ? "text-right" : ""}
-                                                style={{ minWidth: header.column.getSize() }}
-                                            >
-                                                {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
-                                            </TableHead>
-                                        ))}
-                                    </TableRow>
-                                ))}
-                            </TableHeader>
-                            <TableBody>
-                                {rows.length > 0 ? (
-                                    rows.map((row) => (
-                                        <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
-                                            {row.getVisibleCells().map((cell) => (
-                                                <TableCell
-                                                    key={cell.id}
-                                                    className={`py-4 ${cell.column.id === "status" ? "text-right pr-6" : ""}`}
-                                                    style={{ minWidth: cell.column.getSize() }}
+                <>
+                    <div className="border rounded-md">
+                        <div className="w-full overflow-x-auto">
+                            <Table className="min-w-full">
+                                <TableHeader>
+                                    {table.getHeaderGroups().map((headerGroup) => (
+                                        <TableRow key={headerGroup.id}>
+                                            {headerGroup.headers.map((header) => (
+                                                <TableHead
+                                                    key={header.id}
+                                                    style={{ minWidth: header.column.getSize() }}
                                                 >
-                                                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                                                </TableCell>
+                                                    {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
+                                                </TableHead>
                                             ))}
                                         </TableRow>
-                                    ))
-                                ) : (
-                                    <TableRow>
-                                        <TableCell className="h-24 text-center" colSpan={columns.length}>
-                                            No results.
-                                        </TableCell>
-                                    </TableRow>
-                                )}
-                            </TableBody>
-                        </Table>
+                                    ))}
+                                </TableHeader>
+                                <TableBody>
+                                    {rows.length > 0 ? (
+                                        rows.map((row) => (
+                                            <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
+                                                {row.getVisibleCells().map((cell) => (
+                                                    <TableCell
+                                                        key={cell.id}
+                                                        className={`py-4 ${cell.column.id === "status" ? "text-right pr-6" : ""}`}
+                                                        style={{ minWidth: cell.column.getSize() }}
+                                                    >
+                                                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                                    </TableCell>
+                                                ))}
+                                            </TableRow>
+                                        ))
+                                    ) : (
+                                        <TableRow>
+                                            <TableCell className="h-24 text-center" colSpan={columns.length}>
+                                                No results.
+                                            </TableCell>
+                                        </TableRow>
+                                    )}
+                                </TableBody>
+                            </Table>
+                        </div>
                     </div>
-                </div>
+                    {reports.length > 0 && (
+                        <div className="flex flex-col items-center justify-between gap-4 py-4 mt-4 sm:flex-row">
+                            <div className="text-sm text-muted-foreground">
+                                Showing {table.getState().pagination.pageIndex * table.getState().pagination.pageSize + 1} to{" "}
+                                {Math.min(
+                                    (table.getState().pagination.pageIndex + 1) * table.getState().pagination.pageSize,
+                                    table.getFilteredRowModel().rows.length
+                                )}{" "}
+                                of {table.getFilteredRowModel().rows.length} entries
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <Button
+                                    className="h-8 px-4"
+                                    disabled={!table.getCanPreviousPage()}
+                                    size="sm"
+                                    variant="outline"
+                                    onClick={() => table.previousPage()}
+                                >
+                                    Previous
+                                </Button>
+                                <div className="flex items-center gap-1">
+                                    {Array.from({ length: Math.min(5, table.getPageCount()) }, (_, i) => {
+                                        const pageIndex = i;
+                                        const isCurrentPage = pageIndex === table.getState().pagination.pageIndex;
+                                        const isLastPage = pageIndex === table.getPageCount() - 1;
+
+                                        // Show first page, last page, current page, and pages around current page
+                                        if (
+                                            pageIndex === 0 ||
+                                            isLastPage ||
+                                            Math.abs(pageIndex - table.getState().pagination.pageIndex) <= 1
+                                        ) {
+                                            return (
+                                                <Button
+                                                    key={pageIndex}
+                                                    className="w-8 h-8 p-0"
+                                                    size="sm"
+                                                    variant={isCurrentPage ? "default" : "outline"}
+                                                    onClick={() => table.setPageIndex(pageIndex)}
+                                                >
+                                                    {pageIndex + 1}
+                                                </Button>
+                                            );
+                                        }
+
+
+                                        if (
+                                            pageIndex === 1 && table.getState().pagination.pageIndex > 2 ||
+                                            pageIndex === table.getPageCount() - 2 && table.getState().pagination.pageIndex < table.getPageCount() - 3
+                                        ) {
+                                            return <span key={pageIndex} className="px-1">...</span>;
+                                        }
+
+                                        return null;
+                                    })}
+                                </div>
+                                <Button
+                                    className="h-8 px-4"
+                                    disabled={!table.getCanNextPage()}
+                                    size="sm"
+                                    variant="outline"
+                                    onClick={() => table.nextPage()}
+                                >
+                                    Next
+                                </Button>
+                                <Select
+                                    value={table.getState().pagination.pageSize.toString()}
+                                    onValueChange={(value) => {
+                                        const newPageSize = Number(value);
+                                        const currentTopItemIndex = table.getState().pagination.pageIndex * table.getState().pagination.pageSize;
+                                        const newPageIndex = Math.floor(currentTopItemIndex / newPageSize);
+
+                                        table.setPageSize(newPageSize);
+                                        table.setPageIndex(newPageIndex);
+                                    }}
+                                >
+                                    <SelectTrigger className="h-8 w-[80px]">
+                                        <SelectValue placeholder={table.getState().pagination.pageSize} />
+                                    </SelectTrigger>
+                                    <SelectContent side="top">
+                                        {[10, 20].map((pageSize) => (
+                                            <SelectItem key={pageSize} value={pageSize.toString()}>
+                                                {pageSize}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                        </div>
+                    )}
+                </>
             ) : (
                 <div className="p-8 text-center text-gray-500 border-2 border-dashed rounded-lg">
                     <p>No reports found. Create a new report to get started.</p>
@@ -332,3 +442,4 @@ const UserReports = () => {
 }
 
 export default UserReports
+

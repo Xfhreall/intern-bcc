@@ -20,14 +20,7 @@ export const api = axios.create({
   },
 });
 
-export const authApi = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_BASE_URL + "/api/v1",
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
-
-authApi.interceptors.request.use(
+api.interceptors.request.use(
   (config) => {
     const token = getAccessToken();
 
@@ -40,7 +33,7 @@ authApi.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-authApi.interceptors.response.use(
+api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
@@ -71,7 +64,7 @@ authApi.interceptors.response.use(
 
         originalRequest.headers.Authorization = `Bearer ${accessToken}`;
 
-        return authApi(originalRequest);
+        return api(originalRequest);
       } catch (refreshError) {
         useAuthStore.getState().clearTokens();
         localStorage.removeItem("accessToken");

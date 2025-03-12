@@ -1,14 +1,14 @@
 "use client";
-
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { addToast } from "@heroui/toast";
+import { useMutation } from "@tanstack/react-query";
 
 import { internalApi } from "@/lib/axios";
+import { ResetPasswordParams } from "@/types/authTypes";
 
 const formSchema = z
   .object({
@@ -26,9 +26,23 @@ const formSchema = z
 
 type FormValues = z.infer<typeof formSchema>;
 
-export function useResetPassword(token: string) {
+const resetPassword = async ({
+  resetToken,
+  newPassword,
+}: ResetPasswordParams) => {
+  const response = await internalApi.post(
+    `/auth/reset-password/${resetToken}`,
+    {
+      resetToken,
+      newPassword,
+    }
+  );
+
+  return response.data;
+};
+
+export function useResetPassword(resetToken: string) {
   const router = useRouter();
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -38,26 +52,12 @@ export function useResetPassword(token: string) {
     },
   });
 
-  const onSubmit = async (values: FormValues) => {
-    if (!token) {
+  const mutation = useMutation({
+    mutationFn: resetPassword,
+    onSuccess: () => {
       addToast({
-        color: "danger",
+        color: "success",
         variant: "flat",
-        title: "Error",
-        description: "Reset token is missing",
-      });
-
-      return;
-    }
-
-    setIsSubmitting(true);
-    try {
-      await internalApi.post("/reset-password", {
-        token,
-        password: values.password,
-      });
-
-      addToast({
         title: "Success",
         description: "Your password has been changed.",
       });
@@ -65,7 +65,8 @@ export function useResetPassword(token: string) {
       setTimeout(() => {
         router.push("/login");
       }, 2000);
-    } catch (error) {
+    },
+    onError: (error) => {
       let errorMessage = "Failed to reset password. Please try again.";
 
       if (axios.isAxiosError(error) && error.response) {
@@ -78,14 +79,30 @@ export function useResetPassword(token: string) {
         title: "Error",
         description: errorMessage,
       });
-    } finally {
-      setIsSubmitting(false);
+    },
+  });
+
+  const onSubmit = async (values: FormValues) => {
+    if (!resetToken) {
+      addToast({
+        color: "danger",
+        variant: "flat",
+        title: "Error",
+        description: "Reset token is missing",
+      });
+
+      return;
     }
+
+    mutation.mutate({
+      resetToken,
+      newPassword: values.password,
+    });
   };
 
   return {
     form,
     onSubmit,
-    isSubmitting,
+    isSubmitting: mutation.isPending,
   };
 }

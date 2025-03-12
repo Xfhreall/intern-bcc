@@ -52,6 +52,11 @@ export interface ForgotPasswordPayload {
   email: string;
 }
 
+export interface ResetPasswordParams {
+  resetToken: string;
+  newPassword: string;
+}
+
 export interface ForgotPasswordResponse {
   message: string;
 }
