@@ -32,7 +32,7 @@ export function useNewsPage() {
       item.description.toLowerCase().includes(searchQuery.toLowerCase());
 
     const matchesCategory =
-      activeCategory === "All" || (item.category as string) === activeCategory;
+      activeCategory === "All" || item.category === activeCategory;
 
     return matchesSearch && matchesCategory;
   });
