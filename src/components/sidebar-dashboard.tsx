@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
+import { LayoutDashboard } from "lucide-react"
 
 import { Sidebar, SidebarBody, SidebarButton, SidebarLink } from "./ui/sidebar";
 
@@ -19,6 +20,13 @@ export function SidebarDashboard() {
   const pathname = usePathname();
 
   const links = [
+    {
+      label: 'Dashboard',
+      href: "/dashboard",
+      icon: (
+        <LayoutDashboard />
+      )
+    },
     {
       label: "SeaReport",
       href: "/dashboard/sea-report",
@@ -49,31 +57,28 @@ export function SidebarDashboard() {
   const [open, setOpen] = useState(false);
 
   return (
-    <section className="sticky top-0 left-0 justify-between h-screen">
-      <Sidebar open={open} setOpen={setOpen}>
-        <SidebarBody className="gap-10 bg-white shadow-xl">
-          <div className="flex flex-col flex-1 overflow-x-hidden overflow-y-auto">
-            {open ? <Logo /> : <LogoIcon />}
-            <div className="flex flex-col gap-2 mt-8">
-              {links.map((link, idx) => (
-                <SidebarLink
-                  key={idx}
-                  isActive={pathname === link.href}
-                  link={link}
-                />
-              ))}
-            </div>
+    <Sidebar animate={false} open={open} setOpen={setOpen}>
+      <SidebarBody className="gap-10 bg-white shadow-xl">
+        <div className="flex flex-col overflow-x-hidden">
+          <Logo />
+          <div className="flex flex-col gap-2 mt-8">
+            {links.map((link, idx) => (
+              <SidebarLink
+                key={idx}
+                isActive={pathname === link.href}
+                link={link}
+              />
+            ))}
           </div>
-          <SidebarButton />
-        </SidebarBody>
-      </Sidebar>
-    </section>
-
+        </div>
+        <SidebarButton className="mt-auto mb-0 sm:mb-6" />
+      </SidebarBody>
+    </Sidebar>
   );
 }
 export const Logo = () => {
   return (
-    <header className="relative z-20 flex items-center py-1 space-x-2 text-sm font-normal text-black">
+    <main className="relative z-20 flex items-center py-1 pl-10 space-x-2 text-sm font-normal text-black">
       <LogoBlack className="size-6" />
       <motion.span
         animate={{ opacity: 1 }}
@@ -82,9 +87,6 @@ export const Logo = () => {
       >
         Nautikara
       </motion.span>
-    </header>
+    </main>
   );
-};
-export const LogoIcon = () => {
-  return <LogoBlack className="size-6" />;
 };

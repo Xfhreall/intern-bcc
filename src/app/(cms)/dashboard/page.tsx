@@ -1,21 +1,17 @@
 "use client";
 
+import { useEffect } from "react";
 import { useSession } from "next-auth/react";
-
+import { useRouter } from "next/navigation";
 export default function DashboardPage() {
   const { data: session, status } = useSession();
+  const router = useRouter()
 
-  if (status === "loading") {
-    return (
-      <div className="flex items-center justify-center h-screen w-svw">
-        Loading...
-      </div>
-    );
-  }
-
-  if (status === "unauthenticated") {
-    return null;
-  }
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/login");
+    }
+  }, [session]);
 
   return (
     <div className="w-full p-8">

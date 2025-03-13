@@ -5,7 +5,6 @@ import dynamic from 'next/dynamic'
 
 import { HeaderDashboard } from "@/components/ui/header-dashboard"
 
-// Dynamically import components with no SSR
 const SeaReportForm = dynamic(() => import("@/components/forms/seaReport-form"), {
     ssr: false
 })
@@ -17,9 +16,11 @@ export default function SeaReportPage() {
     const [activeTab, setActiveTab] = useState("SeaReport")
 
     return (
-        <div className="w-full h-full px-8 py-4">
+        <div className="w-full h-full py-4">
             <HeaderDashboard activeTab={activeTab} setActiveTab={setActiveTab} />
-            {activeTab === "SeaReport" ? <SeaReportForm /> : <SeaStatus />}
+            <div className="px-8">
+                {activeTab === "SeaReport" ? <SeaReportForm /> : <SeaStatus />}
+            </div>
         </div>
     )
 }

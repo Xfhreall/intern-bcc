@@ -100,16 +100,6 @@ const UserReports = () => {
     const columns = useMemo<ColumnDef<Reports>[]>(
         () => [
             {
-                accessorKey: "id",
-                header: "ID",
-                cell: ({ row }) => {
-                    const id = row.getValue("id")
-
-                    return <span className="font-medium text-gray-500">{String(id).padStart(2, "0")}</span>
-                },
-                size: 80,
-            },
-            {
                 accessorKey: "title",
                 header: "Name",
                 cell: ({ row }) => {
@@ -118,6 +108,7 @@ const UserReports = () => {
                 size: 200,
             },
             {
+                enableHiding: true,
                 accessorKey: "createdAt",
                 header: "Date",
                 cell: ({ row }) => {

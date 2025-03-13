@@ -1,92 +1,97 @@
-import { useState } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
 import { useMutation } from "@tanstack/react-query";
+import { useState } from "react";
 import axios from "axios";
-import { addToast } from "@heroui/toast";
 
+import { DonationResponse, DonationPayload } from "@/types/donationType";
 import { internalApi } from "@/lib/axios";
-import { DonationPayload } from "@/types/donationType";
+import { getAccessToken } from "@/store/authStore";
 
-const formSchema = z.object({
-  amount: z.number().min(1, "Please select nominal donation"),
-  phone: z.string().min(8, "Please enter your phone number"),
-});
-
-type FormValues = z.infer<typeof formSchema>;
+type FormStep = "phone" | "amount";
 
 export const useDonation = () => {
-  const [PhoneCheck, setPhoneCheck] = useState(false);
-  const [error, setError] = useState("");
+  const [step, setStep] = useState<FormStep>("phone");
+  const [phone, setPhone] = useState("");
+  const [selectedAmount, setSelectedAmount] = useState<number | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
-  const form = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      amount: 0,
-      phone: "",
-    },
-  });
+  const calculateTotalWithFee = (amount: number) => {
+    const fee = amount * 0.01;
 
-  const mutation = useMutation({
-    mutationFn: async (data: DonationPayload) => {
+    return amount + fee;
+  };
+
+  const donationMutation = useMutation<
+    DonationResponse,
+    Error,
+    DonationPayload
+  >({
+    mutationFn: async (data) => {
       try {
-        const res = await internalApi.post<DonationPayload>("/donation", data);
-
-        addToast({
-          color: "success",
-          variant: "flat",
-          title: "Request Success",
-          timeout: 3000,
+        const response = await internalApi.post("/donation", data, {
+          headers: {
+            Authorization: `Bearer ${getAccessToken()}`,
+            "Content-Type": "application/json",
+          },
         });
 
-        return res.data;
+        return response.data;
       } catch (error) {
-        let errorMessage = "An unexpected error occurred";
-
-        if (axios.isAxiosError(error)) {
-          errorMessage =
-            error.response?.data?.message ||
-            (typeof error.response?.data === "string"
-              ? error.response.data
-              : "Register failed");
-        } else if (error instanceof Error) {
-          errorMessage = error.message;
+        if (axios.isAxiosError(error) && error.response) {
+          throw new Error(
+            error.response.data.message || "Failed to process donation"
+          );
         }
-        setError(errorMessage);
-        addToast({
-          color: "danger",
-          variant: "bordered",
-          title: "Request Failed",
-          shouldShowTimeoutProgress: true,
-          timeout: 3000,
-          description: errorMessage,
-        });
-
-        throw new Error(errorMessage);
+        throw new Error("Failed to process donation");
       }
     },
-    onError: () => {
-      setError("An error occurred while proccess donation.");
+    onSuccess: (data) => {
+      if (data.transaction?.redirect_url) {
+        window.location.href = data.transaction.redirect_url;
+      }
     },
-    onSuccess: () => {
-      setPhoneCheck(true);
-      setError("");
+    onError: (error) => {
+      setError(error.message || "Failed to process donation");
     },
   });
 
-  const onSubmit = (values: FormValues) => {
-    mutation.mutate({
-      amount: values.amount,
-      phone: values.phone,
+  const handleNextStep = () => {
+    if (!phone || phone.length < 10) {
+      setError("Please enter a valid phone number");
+
+      return;
+    }
+    setError(null);
+    setStep("amount");
+  };
+
+  const handleSelectAmount = (amount: number) => {
+    setSelectedAmount(amount);
+    setError(null);
+  };
+
+  const handleDonation = () => {
+    if (!selectedAmount) {
+      setError("Please select a donation amount");
+
+      return;
+    }
+
+    donationMutation.mutate({
+      amount: selectedAmount,
+      phone,
     });
   };
 
   return {
-    form,
-    onSubmit,
-    PhoneCheck,
-    isLoading: mutation.isPending,
+    step,
+    handleNextStep,
+    handleDonation,
+    handleSelectAmount,
     error,
+    setPhone,
+    phone,
+    donationMutation,
+    selectedAmount,
+    calculateTotalWithFee,
   };
 };

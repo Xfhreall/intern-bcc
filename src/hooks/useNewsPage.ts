@@ -3,16 +3,7 @@
 import { useState } from "react";
 
 import { newsItems } from "@/lib/newsDatas";
-
-export type NewsItem = {
-  id: string;
-  title: string;
-  description: string;
-  image: { src: string };
-  category: string;
-  date?: string;
-  author?: string;
-};
+import { NewsProps } from "@/types/newsTypes";
 
 export function useNewsPage() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -37,7 +28,7 @@ export function useNewsPage() {
     return matchesSearch && matchesCategory;
   });
 
-  const featuredNews = newsItems[0];
+  const featuredNews: NewsProps = newsItems[0];
   const recentNews = filteredNews.slice(
     searchQuery || activeCategory !== "All" ? 0 : 1
   );

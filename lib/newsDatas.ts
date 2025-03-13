@@ -1,19 +1,7 @@
-import type { StaticImageData } from "next/image";
-
 import one from "@/public/assets/news/one.svg";
 import two from "@/public/assets/news/two.svg";
 import three from "@/public/assets/news/three.svg";
-
-export interface NewsProps {
-  id: string;
-  image: StaticImageData;
-  title: string;
-  description: string;
-  date: string;
-  author?: string;
-  content?: string;
-  category?: "Environment" | "Conservation" | "Education" | "Research";
-}
+import { NewsProps } from "@/types/newsTypes";
 
 export const newsItems: NewsProps[] = [
   {

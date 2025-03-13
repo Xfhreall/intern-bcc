@@ -3,50 +3,67 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { Calendar, ArrowRight } from "lucide-react";
+import { motion } from "framer-motion";
 
-import { NewsProps } from "@/lib/newsDatas";
+import { NewsProps } from "@/types/newsTypes";
 
 const NewsCard = ({ data }: { data: NewsProps[] }) => {
   const [loading, setLoading] = useState(true);
 
   return (
-    <div className="flex gap-6 pb-4 overflow-x-auto flex-nowrap md:grid md:grid-cols-2 md:overflow-visible lg:grid-cols-3">
-      {data.map((item, index) => {
-        return (
-          <article
-            key={index}
-            className="min-w-[194px] w-[70%] sm:w-[280px] flex-shrink-0 overflow-hidden transition-shadow bg-white border border-gray-200 rounded-lg hover:shadow-md md:w-full"
-          >
-            <div className="grid h-full p-6 space-y-3">
-              <div className="relative h-48 md:h-56 lg:h-64">
-                {loading && (
-                  <div className="absolute inset-0 bg-gray-200 animate-pulse rounded-[10px]" />
-                )}
-                <Image
-                  fill
-                  alt={item.title}
-                  className={`rounded-[10px] object-cover transition-opacity duration-300 ${loading ? "opacity-0" : "opacity-100"}`}
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  src={item.image.src}
-                  onLoad={() => setLoading(false)}
-                />
+    <div className="grid grid-cols-3 gap-8">
+      {data.map((item, _index) => (
+        <motion.article
+          key={item.id}
+          className="max-w-2xl overflow-hidden transition-all duration-300 bg-white shadow w-52 md:w-full news-card rounded-xl hover:shadow-lg"
+          initial={{ opacity: 0, y: 50 }}
+          viewport={{ once: true }}
+          whileInView={{
+            opacity: 1,
+            y: 0,
+            transition: {
+              duration: 0.5,
+              ease: "easeOut",
+            },
+          }}
+        >
+          <div className="relative w-full h-48 overflow-hidden group">
+            {loading && (<div className="absolute inset-0 bg-gray-500 rounded-xl animate-pulse" />)}
+            <Image
+              fill
+              alt={item.title}
+              className="object-cover transition-transform duration-500 group-hover:scale-105"
+              src={item.image.src || "/placeholder.svg"}
+              onLoad={() => setLoading(false)}
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60" />
+            <div className="absolute z-10 bottom-4 left-4">
+              <span className="px-3 py-1 text-xs font-medium text-white rounded-lg bg-primary">
+                {item.category}
+              </span>
+            </div>
+          </div>
+          <div className="grid p-6 h-fit">
+            <h3 className="mb-3 text-base font-bold transition-colors md:text-xl line-clamp-3 md:line-clamp-2 hover:text-primary">
+              <Link href={`/news/${item.id}`}>{item.title}</Link>
+            </h3>
+            <p className="hidden mb-4 text-gray-600 sm:block line-clamp-3">{item.description}</p>
+            <div className="flex flex-col items-start justify-between gap-4 pt-4 mt-auto md:gap-2 sm:items-center sm:flex-row">
+              <div className="flex items-center text-xs text-gray-500 md:text-sm">
+                <Calendar className="w-4 h-4 mr-1" />
+                <span>{item.date || "Recent"}</span>
               </div>
-              <h4 className="overflow-hidden text-xs font-bold sm:text-xl text-ellipsis display-webkit-box -webkit-line-clamp-2 -webkit-box-orient-vertical">
-                {item.title}
-              </h4>
-              <p className="overflow-hidden hidden sm:block text-[#212121] text-ellipsis display-webkit-box -webkit-line-clamp-3 -webkit-box-orient-vertical">
-                {item.description}
-              </p>
               <Link
-                className="inline-flex items-center pt-6 font-medium text-primary hover:brightness-75"
+                className="inline-flex items-center font-medium text-primary hover:underline"
                 href={`/news/${item.id}`}
               >
-                Read the full news <span className="ml-1">{">"}</span>
+                Read more <ArrowRight className="w-4 h-4 ml-1" />
               </Link>
             </div>
-          </article>
-        );
-      })}
+          </div>
+        </motion.article>
+      ))}
     </div>
   );
 };

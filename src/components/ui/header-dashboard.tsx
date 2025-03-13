@@ -24,7 +24,7 @@ export function HeaderDashboard({
 
     return (
         <nav >
-            <div className="flex items-center justify-between h-16 px-4 ">
+            <div className="flex items-center justify-between h-16 bg-white">
                 <div className="flex items-center space-x-8">
                     {navItems.map((item) => (
                         <button

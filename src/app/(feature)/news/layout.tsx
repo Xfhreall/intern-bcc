@@ -2,6 +2,7 @@ import { Metadata } from "next";
 
 import "@/styles/globals.css";
 import { Footer } from "@/components/footer";
+import { Navbar } from "@/components/navbar";
 
 
 
@@ -22,7 +23,8 @@ export default function RootLayout({
     children: React.ReactNode;
 }) {
     return (
-        <div className="relative w-screen min-h-screen">
+        <div className="relative w-full min-h-screen">
+            <Navbar />
             {children}
             <Footer />
         </div>

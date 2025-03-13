@@ -1,34 +1,45 @@
-import { type NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
+import axios from "axios";
 import { getServerSession } from "next-auth";
 
-import { authOptions } from "@/lib/authOptions";
 import { api } from "@/lib/axios";
+import { authOptions } from "@/lib/authOptions";
 
-export async function POST(request: NextRequest) {
+export async function POST(request: Request) {
+  const session = await getServerSession(authOptions);
+
+  const token = session?.user.accessToken;
+
   try {
-    const session = await getServerSession(authOptions);
-
-    const token = session?.user.accessToken;
-
     if (!token) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json(
+        { message: "Token is required" },
+        { status: 401 }
+      );
     }
-    const formData = await request.formData();
 
-    const response = await api.post("/donation", formData, {
+    const body = await request.json();
+
+    const response = await api.post("/donation", body, {
       headers: {
         Authorization: `Bearer ${token}`,
-        "Content-Type": "multipart/form-data",
+        "Content-Type": "application/json",
       },
     });
 
     return NextResponse.json(response.data);
-  } catch (error: any) {
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      return NextResponse.json(
+        {
+          message: error.response.data.message || "Failed to process donation",
+        },
+        { status: error.response.status || 500 }
+      );
+    }
+
     return NextResponse.json(
-      {
-        error: "Donate failed",
-        details: error.message,
-      },
+      { message: "Internal server error" },
       { status: 500 }
     );
   }
