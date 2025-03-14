@@ -10,18 +10,15 @@ const Login = () => {
   const { status } = useSession();
 
   useEffect(() => {
+    if (status === "unauthenticated") {
+      localStorage.removeItem("accessToken")
+      localStorage.removeItem("refreshToken")
+    }
     if (status === "authenticated") {
       redirect("/dashboard");
     }
   }, [status]);
 
-  if (status === "loading") {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        Loading...
-      </div>
-    );
-  }
 
   if (status === "authenticated") {
     return null;

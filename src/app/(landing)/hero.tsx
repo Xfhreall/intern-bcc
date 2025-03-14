@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 
 import bg from "@/public/bg/heroBg.svg";
 import { Button } from "@/components/ui/button";
@@ -23,21 +24,23 @@ const Hero = () => {
         <div className="absolute inset-0 flex flex-col justify-center px-8 md:px-16">
           <div className="max-w-2xl space-y-6">
             <div className="space-y-2 ">
-              <h1 className="text-2xl font-semibold tracking-wide text-white sm:text-5xl md:text-6xl">
-                Save the Ocean,
+              <h1 className="text-xl font-semibold tracking-wide text-white sm:text-4xl md:text-6xl">
+                Protect Our Oceans,
               </h1>
-              <h1 className="text-2xl font-semibold tracking-wide text-white sm:text-5xl md:text-6xl">
-                Save the Future!
+              <h1 className="text-xl font-semibold tracking-wide text-white sm:text-4xl md:text-6xl">
+                One Action at a Time
               </h1>
             </div>
-            <p className="text-xs w-[227px] sm:w-full font-extralight text-white/90 md:text-xl">
+            <p className="text-xs w-[227px] sm:w-full font-extralight text-white/90 sm:text-base md:text-xl">
               Join in real action to protect the marine ecosystem!
             </p>
             <Button
-              className="px-6 py-2 text-xs font-medium sm:font-semibold sm:px-10 sm:py-6 sm:text-md bg-primary hover:bg-secondary"
+              className="px-6 py-2 text-xs font-medium sm:font-semibold sm:px-10 sm:py-6 sm:text-base bg-primary hover:text-neutral-700 hover:bg-btnhover"
               size="lg"
             >
-              Get Started
+              <Link href="/register">
+                Get Started
+              </Link>
             </Button>
           </div>
         </div>

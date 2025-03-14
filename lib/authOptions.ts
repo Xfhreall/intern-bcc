@@ -183,13 +183,11 @@ export const authOptions: NextAuthOptions = {
   },
   session: {
     strategy: "jwt",
-    maxAge: 7 * 24 * 60 * 60,
+    maxAge: 1 * 24 * 60 * 60,
   },
   debug: process.env.NODE_ENV === "development",
 };
 
-// Create the auth handler from NextAuth
 const handler = NextAuth(authOptions);
 
-// Export the handler as route handlers
 export { handler as GET, handler as POST };

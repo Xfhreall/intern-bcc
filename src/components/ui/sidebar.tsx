@@ -104,7 +104,7 @@ export const DesktopSidebar = ({
           width: animate ? (open ? "250px" : "60px") : "250px",
         }}
         className={cn(
-          "h-full px-4 py-4 hidden  md:flex md:flex-col bg-neutral-100 dark:bg-neutral-800 w-[300px] flex-shrink-0",
+          "hidden pt-4 md:flex md:flex-col bg-neutral-100 dark:bg-neutral-800 w-[300px] flex-shrink-0 sticky h-screen top-0 left-0 z-50",
           className
         )}
         onMouseEnter={() => setOpen(true)}
@@ -125,7 +125,7 @@ export const MobileSidebar = ({
   const { open, setOpen } = useSidebar();
 
   return (
-    <div className="fixed left-0 block top-10 md:hidden">
+    <div className="sticky top-0 left-0 hidden bg-white md:hidden">
       <button className="z-20 flex justify-end w-full">
         <IconMenu2
           className="text-neutral-800 dark:text-neutral-200"
@@ -176,13 +176,13 @@ export const SidebarLink = ({
   return (
     <Link
       className={cn(
-        "flex items-center gap-2 px-1 py-2 rounded-md transition-colors",
-        isActive ? "bg-primary text-white font-medium" : "hover:bg-gray-100 text-gray-700",
+        "flex items-center gap-2 px-10 py-4 transition-colors",
+        isActive ? "bg-primary text-white font-medium" : "hover:bg-gray-100 text-gray-500",
       )}
       href={link.href}
     >
       {React.cloneElement(link.icon as React.ReactElement, {
-        className: cn("flex-shrink-0 w-5 h-5", isActive ? "fill-white" : "fill-gray-700"),
+        className: cn("flex-shrink-0 w-5 h-5", isActive ? "fill-white" : "fill-gray-500"),
       })}
       <span className="overflow-hidden text-sm whitespace-nowrap">{link.label}</span>
     </Link>
@@ -201,7 +201,7 @@ export const SidebarButton = ({
   return (
     <Button
       className={cn(
-        "flex items-center gap-2 px-2 py-2 rounded-md justify-start transition-colors bg-red-500 hover:bg-red-600",
+        "flex items-center gap-2 px-10 py-6 justify-start rounded-none transition-colors bg-red-600 hover:bg-red-700",
         className
       )}
       onClick={() => logout.mutate()}

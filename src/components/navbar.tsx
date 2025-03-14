@@ -23,15 +23,15 @@ export const Navbar = () => {
       >
         <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
           <NavbarBrand as="li" className="gap-3 max-w-fit">
-            <LogoWhite className="w-9 h-9" />
+            <LogoWhite className="size-8 sm:size-9" />
             <NextLink className="flex items-center justify-start" href="/">
-              <p className="text-2xl font-bold text-white">Nautikara</p>
+              <p className="text-xl font-bold text-white sm:text-2xl">Nautikara</p>
             </NextLink>
           </NavbarBrand>
         </NavbarContent>
         <NavbarContent justify="center">
           <div className="py-2 text-white px-11">
-            <ul className="justify-start hidden gap-12 font-normal md:flex">
+            <ul className="justify-start hidden gap-12 folg-normal lg:flex">
               {siteConfig.navItems.map((item) => (
                 <NavbarItem key={item.href}>
                   <NextLink className="transition-all duration-300 hover:font-bold" color="foreground" href={item.href}>
@@ -43,12 +43,12 @@ export const Navbar = () => {
           </div>
         </NavbarContent>
         <NavbarContent justify="end">
-          <NavbarItem className="hidden md:flex">
-            <Button as={Link} className="px-16 text-sm font-semibold bg-white text-primary rounded-[5px]" href="/login">
+          <NavbarItem className="hidden lg:flex">
+            <Button as={Link} className="px-6 text-sm font-semibold bg-white text-primary rounded-[5px]" href="/login">
               Login
             </Button>
           </NavbarItem>
-          <NavbarItem className="flex md:hidden">
+          <NavbarItem className="flex lg:hidden">
             <button aria-label="Toggle menu" className="p-2 text-white focus:outline-none" onClick={toggleSidebar}>
               <Menu size={24} />
             </button>

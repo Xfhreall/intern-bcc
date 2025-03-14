@@ -23,8 +23,15 @@ export const News = () => {
             </Link>
           </div>
         </div>
-        <div className="w-full overflow-x-scroll">
-          <NewsCard data={displayedNewsItems} />
+        <div className="w-full md:block">
+          <div className="overflow-x-scroll md:hidden">
+            <div className="flex flex-row pb-4 space-x-2 w-max">
+              <NewsCard data={displayedNewsItems} />
+            </div>
+          </div>
+          <div className="hidden md:block">
+            <NewsCard data={displayedNewsItems} />
+          </div>
         </div>
       </div>
     </section>
