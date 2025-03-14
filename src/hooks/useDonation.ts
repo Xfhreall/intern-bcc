@@ -64,6 +64,10 @@ export const useDonation = () => {
     setStep("amount");
   };
 
+  const hanldeBackStep = () => {
+    setStep("phone");
+  };
+
   const handleSelectAmount = (amount: number) => {
     setSelectedAmount(amount);
     setError(null);
@@ -93,5 +97,6 @@ export const useDonation = () => {
     donationMutation,
     selectedAmount,
     calculateTotalWithFee,
+    hanldeBackStep,
   };
 };

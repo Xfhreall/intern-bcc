@@ -1,14 +1,13 @@
 import { StaticImageData } from "next/image";
 
-export interface NewsProps {
+export interface EventsProps {
   id: string;
   image: StaticImageData;
   title: string;
   description: string;
+  date: string;
+  location: string;
   createdAt: string;
-  author?: string;
-  content?: string;
-  category?: string;
 }
 
-export type NewsItems = NewsProps[];
+export type EventsItems = EventsProps[];

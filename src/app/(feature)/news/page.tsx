@@ -9,6 +9,9 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { useNewsPage } from "@/hooks/useNewsPage"
 import NewsCard from "@/components/ui/news-card"
+import { Pagination } from "@/components/ui/pagination"
+import { formatDate } from "@/utils/format-date"
+
 
 export default function NewsPage() {
     const {
@@ -20,6 +23,9 @@ export default function NewsPage() {
         filteredNews,
         featuredNews,
         recentNews,
+        currentPage,
+        totalPages,
+        onPageChange,
         clearFilters,
     } = useNewsPage()
     const [loading, setLoading] = useState(true);
@@ -27,7 +33,7 @@ export default function NewsPage() {
 
     return (
         <div className="w-full min-h-screen mx-auto max-w-7xl">
-            <div className="container grid w-full px-20 mx-auto pt-14">
+            <div className="container grid w-full px-10 mx-auto md:px-20 pt-14">
                 <div className="space-y-6">
                     <h1 className="text-xl font-semibold sm:text-3xl">
                         Latest News & Updates
@@ -67,22 +73,22 @@ export default function NewsPage() {
                 </div>
             </div>
 
-            <div className="container px-20 py-8 mx-auto">
+            <div className="container px-10 py-8 mx-auto md:px-20">
                 {filteredNews.length === 0 ? (
                     <div className="py-16 text-center bg-white shadow-sm rounded-xl">
                         <div className="flex items-center justify-center w-24 h-24 mx-auto mb-6 bg-gray-100 rounded-full">
                             <Search className="w-10 h-10 text-gray-400" />
                         </div>
                         <h2 className="mb-2 text-2xl font-semibold">No results found</h2>
-                        <p className="mb-6 text-gray-600">{`We couldn't find any news matching "${searchQuery}"`}</p>
+                        <p className="mb-6 text-gray-600">{`We couldn't find any news matching`}</p>
                         <Button className="px-6 rounded-full" onClick={clearFilters}>
                             Clear Search
                         </Button>
                     </div>
                 ) : (
                     <>
-                        {!searchQuery && activeCategory === "All" && (
-                            <div className="mb-16">
+                        {!searchQuery && activeCategory === "All" && featuredNews && (
+                            <div className="mb-16" id="news-section">
                                 <div className="flex items-center mb-6">
                                     <h2 className="text-2xl font-bold">Featured Story</h2>
                                     <div className="flex-grow h-px ml-4 bg-gray-300" />
@@ -97,7 +103,7 @@ export default function NewsPage() {
                                                 fill
                                                 alt={featuredNews.title}
                                                 className="object-cover"
-                                                src={featuredNews.image.src}
+                                                src={featuredNews.image}
                                                 onLoad={() => setLoading(false)}
                                             />
                                             <div className="absolute z-10 bottom-4 right-4">
@@ -112,7 +118,7 @@ export default function NewsPage() {
                                             <p className="hidden mb-6 text-gray-600 md:block">{featuredNews.description}</p>
                                             <div className="flex items-center mb-6 text-sm text-gray-500">
                                                 <Calendar className="w-4 h-4 mr-1" />
-                                                <span>{featuredNews.createdAt || "Recent"}</span>
+                                                <span>{formatDate(featuredNews.createdAt)}</span>
                                                 <span className="mx-2">•</span>
                                                 <User className="w-4 h-4 mr-1" />
                                                 <span>{featuredNews.author || "Admin"}</span>
@@ -128,8 +134,8 @@ export default function NewsPage() {
                             </div>
                         )}
 
-                        <div>
-                            <div className="flex items-center mb-8">
+                        <div className="grid items-center w-full">
+                            <div className="flex items-center mb-8 ">
                                 <h2 className="text-2xl font-bold">
                                     {searchQuery || activeCategory !== "All" ? "Search Results" : "Latest Articles"}
                                 </h2>
@@ -137,6 +143,11 @@ export default function NewsPage() {
                             </div>
 
                             <NewsCard data={recentNews} />
+                            <div className="flex ml-auto">
+                                {totalPages > 1 && (
+                                    <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={onPageChange} />
+                                )}
+                            </div>
                         </div>
                     </>
                 )}

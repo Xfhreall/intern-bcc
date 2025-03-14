@@ -6,37 +6,40 @@ import Link from "next/link"
 import { ArrowLeft, Calendar, Clock, User } from 'lucide-react'
 import { useParams } from "next/navigation"
 
-import { newsItems } from "@/lib/newsDatas"
+import { useUserNews } from "@/hooks/useNews"
 import { NewsProps } from "@/types/newsTypes"
 import { Button } from "@/components/ui/button"
+import { formatDate } from "@/utils/format-date"
+import NewsCard from "@/components/ui/news-card"
+import { getAccessToken } from "@/store/authStore"
 
 export default function NewsArticlePage() {
-    const params = useParams()
-    const id = params.id as string
+    const token = getAccessToken()
+    const params = useParams();
+    const id = params.id as string;
+    const { data, isLoading } = useUserNews();
 
-    const [article, setArticle] = useState<NewsProps | null>(null)
-    const [loading, setLoading] = useState(true)
-    const [relatedArticles, setRelatedArticles] = useState<NewsProps[]>([])
+    const [article, setArticle] = useState<NewsProps | null>(null);
+    const [relatedArticles, setRelatedArticles] = useState<NewsProps[]>([]);
 
     useEffect(() => {
-        const foundArticle = newsItems.find(item => item.id === id)
+        if (!data || isLoading) return;
+        const foundArticle = data.find((item) => item.id === id);
 
         if (foundArticle) {
-            setArticle(foundArticle)
+            setArticle(foundArticle);
 
-            const related = newsItems
-                .filter(item => item.id !== id)
-                .slice(0, 3)
+            const related = data.filter((item) => item.id !== id).slice(0, 3);
 
-            setRelatedArticles(related)
+            setRelatedArticles(related);
         }
 
-        setLoading(false)
-    }, [id])
+    }, [id, data, isLoading]);
 
-    if (loading) {
+
+    if (isLoading) {
         return (
-            <div className="container max-w-4xl py-12 mx-auto">
+            <div className="container h-screen max-w-4xl py-12 mx-auto">
                 <div className="w-full h-64 bg-gray-200 rounded-lg animate-pulse" />
                 <div className="w-3/4 h-10 mt-6 bg-gray-200 rounded animate-pulse" />
                 <div className="w-full h-4 mt-4 bg-gray-200 rounded animate-pulse" />
@@ -52,21 +55,24 @@ export default function NewsArticlePage() {
                 <h1 className="mb-4 text-2xl font-bold">Article Not Found</h1>
                 <p className="mb-8 text-gray-600">The article you&apos;re looking for doesn&apos;t exist or has been removed.</p>
                 <Button asChild>
-                    <Link href="/news-page">Back to News</Link>
+                    <Link href="/news">Back to News</Link>
                 </Button>
             </div>
         )
     }
 
     return (
-        <div className="container max-w-4xl px-4 py-8 mx-auto md:py-12">
-            <Link
-                className="inline-flex items-center mb-6 text-sm font-medium text-primary hover:brightness-75"
-                href="/news"
-            >
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Back to News
-            </Link>
+        <div className="container px-4 py-8 mx-auto mb-auto max-w-7xl md:py-12">
+            <div className="flex items-center justify-between w-full mb-6">
+                <Link
+                    className="inline-flex items-center text-sm font-medium text-primary hover:brightness-75"
+                    href="/news"
+                >
+                    <ArrowLeft className="w-4 h-4 mr-2" />
+                    Back to News
+                </Link>
+                {token ? (<Button asChild ><Link href="/dashboard/news"> Back to dashboard</Link></Button>) : null}
+            </div>
 
             <article className="mb-12">
                 <div className="relative w-full h-64 mb-6 overflow-hidden rounded-lg md:h-96">
@@ -75,7 +81,7 @@ export default function NewsArticlePage() {
                         priority
                         alt={article.title}
                         className="object-cover"
-                        src={article.image.src || "/placeholder.svg"}
+                        src={article.image}
                     />
                 </div>
 
@@ -84,7 +90,7 @@ export default function NewsArticlePage() {
                 <div className="flex flex-wrap items-center gap-4 mb-6 text-sm text-gray-500">
                     <div className="flex items-center">
                         <Calendar className="w-4 h-4 mr-1 text-primary" />
-                        <span>{article.date || new Date().toLocaleDateString()}</span>
+                        <span>{formatDate(article.createdAt) || new Date().toLocaleDateString()}</span>
                     </div>
                     <div className="flex items-center">
                         <Clock className="w-4 h-4 mr-1 text-primary " />
@@ -129,37 +135,9 @@ export default function NewsArticlePage() {
             </article>
 
             {relatedArticles.length > 0 && (
-                <div className="pt-8 mt-12 border-t border-gray-200">
+                <div className="w-full pt-8 mt-12 border-t border-gray-200">
                     <h2 className="mb-6 text-2xl font-bold text-gray-800">Related News</h2>
-                    <div className="grid gap-6 md:grid-cols-3">
-                        {relatedArticles.map((item) => (
-                            <article
-                                key={item.id}
-                                className="overflow-hidden transition-shadow bg-white border border-gray-200 rounded-lg hover:shadow-md"
-                            >
-                                <div className="grid h-full p-4 space-y-3">
-                                    <div className="relative h-40">
-                                        <Image
-                                            fill
-                                            alt={item.title}
-                                            className="rounded-[10px] object-cover"
-                                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 33vw"
-                                            src={item.image.src || "/placeholder.svg"}
-                                        />
-                                    </div>
-                                    <h4 className="overflow-hidden text-sm font-bold text-ellipsis display-webkit-box -webkit-line-clamp-2 -webkit-box-orient-vertical">
-                                        {item.title}
-                                    </h4>
-                                    <Link
-                                        className="inline-flex items-center pt-4 text-sm font-medium text-primary hover:brightness-75"
-                                        href={`/news/${item.id}`}
-                                    >
-                                        Read more <span className="ml-1">{">"}</span>
-                                    </Link>
-                                </div>
-                            </article>
-                        ))}
-                    </div>
+                    <NewsCard data={relatedArticles} />
                 </div>
             )}
         </div>

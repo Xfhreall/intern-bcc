@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { signIn, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { Eye, EyeOff, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -20,7 +20,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { GoogleIcon } from "@/public/icon/googleIcon";
 import { Logo } from "@/public/icon/logo";
-import { api } from "@/lib/axios";
 
 export function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -28,7 +27,6 @@ export function LoginForm() {
   const router = useRouter();
   const { status } = useSession();
   const searchParams = useSearchParams();
-  const [googleLoading, setGoogleLoading] = useState(false);
 
   const error = searchParams.get("error");
 
@@ -46,29 +44,14 @@ export function LoginForm() {
 
   const handleGoogleLogin = async () => {
     try {
-      const response = await api.get(
-        `/auth/google`
-      );
-
-      if (response.data.code === 200) {
-        const redirectLink = response.data.data.redirect_link;
-        const JWTtoken = response.data.data?.token;
-
-        // Store the JWT token if necessary
-        if (JWTtoken) {
-          localStorage.setItem("authToken", JWTtoken);
-        }
-
-        // Redirect to the OAuth URL
-        window.location.href = redirectLink;
-      }
+      window.location.href = `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/auth/google`;
     } catch (error) {
       console.error("Error during Google OAuth:", error);
     }
   };
 
   return (
-    <div className="w-full max-w-md p-8 mx-auto space-y-6 bg-white rounded-lg shadow-xl">
+    <div className="w-full max-w-md p-8 mx-auto space-y-6 bg-transparent rounded-lg shadow-xl md:bg-white">
       <div className="relative flex flex-col items-center justify-center mb-6">
         <Link
           className="absolute top-0 flex items-center self-start gap-1 text-primary hover:underline"
@@ -101,7 +84,7 @@ export function LoginForm() {
                       placeholder="example@email.com"
                       {...field}
                       className="h-12 border-gray-300 rounded-md"
-                      disabled={isLoading || googleLoading}
+                      disabled={isLoading}
                       type="email"
                     />
                   </FormControl>
@@ -125,12 +108,12 @@ export function LoginForm() {
                         placeholder="••••••••"
                         {...field}
                         className="h-12 pr-10 border-gray-300 rounded-md"
-                        disabled={isLoading || googleLoading}
+                        disabled={isLoading}
                         type={showPassword ? "text" : "password"}
                       />
                       <button
                         className="absolute text-gray-500 transform -translate-y-1/2 right-3 top-1/2"
-                        disabled={isLoading || googleLoading}
+                        disabled={isLoading}
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
                       >
@@ -157,7 +140,7 @@ export function LoginForm() {
                   <Checkbox
                     checked={field.value}
                     className="w-5 h-5 border-gray-300 rounded text-primary"
-                    disabled={isLoading || googleLoading}
+                    disabled={isLoading}
                     id="rememberMe"
                     onCheckedChange={field.onChange}
                   />
@@ -175,7 +158,7 @@ export function LoginForm() {
 
           <Button
             className="w-full h-12 mt-2 text-white bg-primary hover:bg-[#006da8]"
-            disabled={isLoading || googleLoading}
+            disabled={isLoading}
             type="submit"
           >
             {isLoading ? "Logging in..." : "Login"}
@@ -190,21 +173,12 @@ export function LoginForm() {
 
       <Button
         className="w-full h-12 text-gray-700 bg-white border border-gray-300 hover:bg-gray-50"
-        disabled={isLoading || googleLoading}
+        disabled={isLoading}
         variant="outline"
         onClick={handleGoogleLogin}
       >
-        {googleLoading ? (
-          <>
-            <span className="w-5 h-5 mr-2 border-2 border-gray-300 rounded-full border-t-gray-600 animate-spin" />
-            <span>Connecting...</span>
-          </>
-        ) : (
-          <>
-            <GoogleIcon />
-            <span className="ml-2">Continue with Google</span>
-          </>
-        )}
+        <GoogleIcon />
+        <span className="ml-2">Continue with Google</span>
       </Button>
 
       <div className="mt-6 text-sm text-center text-gray-700">

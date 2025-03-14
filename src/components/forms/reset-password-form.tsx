@@ -25,7 +25,7 @@ const ResetPasswordForm = () => {
 
     return (
         <div className="flex items-center justify-center min-h-screen ">
-            <div className="w-full max-w-md p-8 mx-auto space-y-6 bg-white rounded-lg shadow-xl">
+            <div className="w-full max-w-md p-8 mx-auto space-y-6 bg-transparent rounded-lg shadow-xl md:bg-white">
                 <div className="flex flex-col items-center justify-center space-y-4">
                     <Logo className="size-16" />
                     <div className="text-center">

@@ -2,7 +2,6 @@ import type { NextAuthOptions, Profile } from "next-auth";
 
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import GoogleProvider from "next-auth/providers/google";
 import axios from "axios";
 
 import { api } from "./axios";
@@ -36,8 +35,26 @@ export const authOptions: NextAuthOptions = {
       credentials: {
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
+        accessToken: { label: "Access Token", type: "text" },
+        refreshToken: { label: "Refresh Token", type: "text" },
       },
       async authorize(credentials) {
+        if (credentials?.accessToken && credentials?.refreshToken) {
+          try {
+            return {
+              id: "token-auth-user",
+              email: credentials.email || "user@example.com",
+              name: credentials.email.split("@")[0],
+              accessToken: credentials.accessToken,
+              refreshToken: credentials.refreshToken,
+            };
+          } catch (error) {
+            console.error("Token validation error:", error);
+
+            return null;
+          }
+        }
+
         if (!credentials?.email || !credentials?.password) {
           return null;
         }
@@ -76,51 +93,12 @@ export const authOptions: NextAuthOptions = {
         }
       },
     }),
-    GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID || "",
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
-      authorization: {
-        params: {
-          prompt: "consent",
-          access_type: "offline",
-          response_type: "code",
-          scope:
-            "email profile openid https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email",
-        },
-      },
-    }),
   ],
   pages: {
     signIn: "/login",
     error: "/login",
   },
   callbacks: {
-    async signIn({ account, profile }) {
-      if (account?.provider === "google" && profile?.email) {
-        try {
-          const response = await api.get(`/auth/google`, {
-            params: {
-              code: account.code,
-              scope: account.scope,
-              authuser: 0,
-              prompt: "consent",
-            },
-          });
-
-          if (response.data.accessToken && response.data.refreshToken) {
-            account.backendAccessToken = response.data.accessToken;
-            account.backendRefreshToken = response.data.refreshToken;
-          }
-
-          return true;
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        } catch (error) {
-          return true;
-        }
-      }
-
-      return true;
-    },
     async jwt({
       token,
       user,

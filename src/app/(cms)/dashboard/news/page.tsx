@@ -1,11 +1,15 @@
 import React from "react";
 
-const NewsPage = () => {
+import NewsPage from "@/app/(feature)/news/page";
+import { HeaderDashboard } from "@/components/ui/header-dashboard";
+
+const NewsDashboard = () => {
   return (
-    <section className="bg-background w-svw">
-      <h1>hai</h1>
+    <section className="flex flex-col w-full">
+      <HeaderDashboard />
+      <NewsPage />
     </section>
   );
 };
 
-export default NewsPage;
+export default NewsDashboard;

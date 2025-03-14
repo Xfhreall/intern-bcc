@@ -25,6 +25,7 @@ export const siteConfig = {
       href: "#news",
     },
   ],
+
   links: {
     github: "https://github.com/heroui-inc/heroui",
     twitter: "https://twitter.com/hero_ui",

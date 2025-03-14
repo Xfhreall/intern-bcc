@@ -10,9 +10,9 @@ export function LogoutButton() {
 
   return (
     <Button
-      className="flex items-center gap-2"
+      className="flex items-center justify-start w-full gap-2 bg-red-600 border-none hover:bg-red-800"
       disabled={logout.isPending}
-      variant="outline"
+
       onClick={() => logout.mutate()}
     >
       <LogOut className="w-4 h-4" />

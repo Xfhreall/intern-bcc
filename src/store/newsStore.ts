@@ -1,10 +1,10 @@
+import type { NewsItems } from "@/types/newsTypes";
+
 import { create } from "zustand";
 
-import { NewsProps } from "@/types/newsTypes";
-
 interface NewsState {
-  news: NewsProps[];
-  setNews: (news: NewsProps[]) => void;
+  news: NewsItems;
+  setNews: (news: NewsItems) => void;
 }
 
 export const useNewsStore = create<NewsState>((set) => ({

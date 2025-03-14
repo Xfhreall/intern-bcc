@@ -1,5 +1,7 @@
 "use client"
 
+import { ChevronLeft } from "lucide-react"
+
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
@@ -7,10 +9,10 @@ import { donationAmounts } from "@/types/donationType"
 import { useDonation } from "@/hooks/useDonation"
 
 export default function DonationForm() {
-    const { step, handleNextStep, handleDonation, handleSelectAmount, error, setPhone, phone, donationMutation, selectedAmount, calculateTotalWithFee } = useDonation()
+    const { step, handleNextStep, handleDonation, handleSelectAmount, error, setPhone, phone, donationMutation, selectedAmount, hanldeBackStep, calculateTotalWithFee } = useDonation()
 
     return (
-        <Card className="sticky w-full top-10">
+        <Card className="sticky w-full top-28">
             <CardHeader>
                 {step === "phone" ? (
                     <>
@@ -19,7 +21,10 @@ export default function DonationForm() {
                     </>
                 ) : (
                     <>
-                        <CardTitle className="text-xl">Make a Difference Today!</CardTitle>
+                        <div className="flex items-center">
+                            <ChevronLeft className="mr-2 cursor-pointer text-primary" onClick={hanldeBackStep} />
+                            <CardTitle className="text-xl">Make a Difference Today!</CardTitle>
+                        </div>
                         <CardDescription>Your donation helps protect our oceans.</CardDescription>
                     </>
                 )}

@@ -22,7 +22,7 @@ const RegisterForm = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   return (
-    <div className="w-full max-w-md p-8 mx-auto space-y-6 bg-white rounded-lg shadow-xl">
+    <div className="w-full max-w-md p-8 mx-auto space-y-6 bg-transparent rounded-lg shadow-xl md:bg-white">
       <div className="relative flex flex-col items-center justify-center mb-6">
         <Link
           className="absolute top-0 flex items-center self-start gap-1 text-primary hover:underline"

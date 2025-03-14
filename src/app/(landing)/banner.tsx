@@ -17,7 +17,7 @@ export const Banner = () => {
           <div className="flex items-center w-full gap-3 md:w-auto">
             <Link
               className="w-full px-10 py-3 font-semibold text-center transition-colors bg-white rounded-md text-primary md:w-auto hover:bg-opacity-90"
-              href="#contact"
+              href="#footer"
             >
               Contact Us
             </Link>

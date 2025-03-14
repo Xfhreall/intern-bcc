@@ -1,22 +1,7 @@
 import { useQuery, useMutation } from "@tanstack/react-query";
 
 import { useReportsStore } from "@/store/reportStore";
-import { internalApi } from "@/lib/axios";
-import { getCredentialsData } from "@/store/authStore";
-
-const fetchReports = async () => {
-  const credentialsData = getCredentialsData();
-
-  if (credentialsData === process.env.NEXT_PUBLIC_ADMIN_CREDENTIALS) {
-    const { data } = await internalApi.get("/reports");
-
-    return data;
-  } else {
-    const { data } = await internalApi.get("/reports/user-reports");
-
-    return data;
-  }
-};
+import { fetchReports } from "@/lib/reportDatas";
 
 export const useUserReports = () => {
   const setReports = useReportsStore((state) => state.setReports);

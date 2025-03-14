@@ -358,7 +358,6 @@ const UserReports = () => {
                                         const isCurrentPage = pageIndex === table.getState().pagination.pageIndex;
                                         const isLastPage = pageIndex === table.getPageCount() - 1;
 
-                                        // Show first page, last page, current page, and pages around current page
                                         if (
                                             pageIndex === 0 ||
                                             isLastPage ||

@@ -9,7 +9,7 @@ import {
 
 export const Footer = () => {
   return (
-    <footer className="py-10 text-white bg-primary">
+    <footer className="py-10 text-white bg-primary" id="footer">
       <div className="container px-12 mx-auto max-w-7xl">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
           <div className="space-y-4">
