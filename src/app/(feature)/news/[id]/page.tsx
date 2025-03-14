@@ -6,7 +6,8 @@ import Link from "next/link"
 import { ArrowLeft, Calendar, Clock, User } from 'lucide-react'
 import { useParams } from "next/navigation"
 
-import { newsItems, NewsProps } from "@/lib/newsDatas"
+import { newsItems } from "@/lib/newsDatas"
+import { NewsProps } from "@/types/newsTypes"
 import { Button } from "@/components/ui/button"
 
 export default function NewsArticlePage() {
