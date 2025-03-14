@@ -5,8 +5,8 @@ export interface NewsProps {
   image: StaticImageData;
   title: string;
   description: string;
-  date: string;
+  createdAt: string;
   author?: string;
   content?: string;
-  category?: "Environment" | "Conservation" | "Education" | "Research";
+  category?: string;
 }

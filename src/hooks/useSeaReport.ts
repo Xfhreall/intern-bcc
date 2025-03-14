@@ -10,20 +10,20 @@ import { addToast } from "@heroui/toast";
 import { internalApi } from "@/lib/axios";
 
 const formSchema = z.object({
-  title: z.string().min(1, {
-    message: "Title is required.",
+  title: z.string().min(8, {
+    message: "Title must be at least 8 characters.",
   }),
-  street: z.string().min(1, {
-    message: "Street address is required.",
+  street: z.string().min(8, {
+    message: "Street must be at least 8 characters.",
   }),
-  province: z.string().min(1, {
+  province: z.string().min(4, {
     message: "Province is required.",
   }),
   country: z.string().min(1, {
     message: "Country is required.",
   }),
-  description: z.string().min(5, {
-    message: "Description must be at least 5 characters.",
+  description: z.string().min(10, {
+    message: "Description must be at least 10 characters.",
   }),
   file: z.instanceof(FileList).refine((files) => files.length > 0, {
     message: "Image file is required.",

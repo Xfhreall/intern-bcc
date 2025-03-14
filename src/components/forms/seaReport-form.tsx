@@ -140,7 +140,7 @@ export default function SeaReportForm() {
                                                                     fill
                                                                     alt="Preview"
                                                                     className="max-w-full object-left object-contain h-auto max-h-[200px]"
-                                                                    src={preview || "/placeholder.svg"}
+                                                                    src={preview}
                                                                 />
                                                             ) : (
                                                                 <video
