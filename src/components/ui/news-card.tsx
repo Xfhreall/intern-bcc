@@ -52,7 +52,7 @@ const NewsCard = ({ data }: { data: NewsProps[] }) => {
             <div className="flex flex-col items-start justify-between gap-4 pt-4 mt-auto md:gap-2 sm:items-center sm:flex-row">
               <div className="flex items-center text-xs text-gray-500 md:text-sm">
                 <Calendar className="w-4 h-4 mr-1" />
-                <span>{item.date || "Recent"}</span>
+                <span>{item.createdAt || "Recent"}</span>
               </div>
               <Link
                 className="inline-flex items-center font-medium text-primary hover:underline"

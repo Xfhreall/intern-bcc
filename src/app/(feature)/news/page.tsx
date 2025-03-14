@@ -112,7 +112,7 @@ export default function NewsPage() {
                                             <p className="hidden mb-6 text-gray-600 md:block">{featuredNews.description}</p>
                                             <div className="flex items-center mb-6 text-sm text-gray-500">
                                                 <Calendar className="w-4 h-4 mr-1" />
-                                                <span>{featuredNews.date || "Recent"}</span>
+                                                <span>{featuredNews.createdAt || "Recent"}</span>
                                                 <span className="mx-2">•</span>
                                                 <User className="w-4 h-4 mr-1" />
                                                 <span>{featuredNews.author || "Admin"}</span>
