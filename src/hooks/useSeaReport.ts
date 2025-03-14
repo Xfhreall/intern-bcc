@@ -59,6 +59,8 @@ export const useSeaReport = () => {
     },
     onSuccess: () => {
       addToast({
+        color: "success",
+        variant: "flat",
         title: "Report submitted",
         description: "Your report has been successfully submitted.",
       });
